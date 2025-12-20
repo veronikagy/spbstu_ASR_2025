@@ -72,7 +72,7 @@ https://disk.yandex.ru/edit/d/7XG3QUkyRcKMLdZjs_nzJCPegnqahzm72s0qoIz-cKg6V015eW
         <a href="https://disk.yandex.ru/d/R22RUkulOCNT6A">
             Яндекс-диск 5 лаба
         </a><br><br>
-      Дедлайн: 2X.12.25 23:59 по МСК (общий для оставшихся лаб и итогового реферата)<br><br>
+      Дедлайн: 22.12.25 23:59 по МСК (общий для оставшихся лаб и итогового реферата)<br><br>
     </li>
     
 </ol>
