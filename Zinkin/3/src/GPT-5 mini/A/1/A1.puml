@@ -1,0 +1,31 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Читатель" as Reader
+actor "Библиотекарь" as Librarian
+
+rectangle "Система управления библиотекой" {
+    usecase "Регистрация читателя" as UC1
+    usecase "Поиск книги" as UC2
+    usecase "Бронирование книги" as UC3
+    usecase "Выдача книги" as UC4
+    usecase "Возврат книги" as UC5
+    usecase "Управление каталогом" as UC6
+    usecase "Просмотр истории операций" as UC7
+}
+
+Reader --> UC1
+Reader --> UC2
+Reader --> UC3
+Reader --> UC5
+Reader --> UC7
+
+Librarian --> UC2
+Librarian --> UC4
+Librarian --> UC5
+Librarian --> UC6
+Librarian --> UC7
+
+@enduml
+

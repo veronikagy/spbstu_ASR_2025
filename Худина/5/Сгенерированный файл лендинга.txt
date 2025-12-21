@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KnowledgeGraph Vis - Визуализируйте структуру науки</title>
+    <!-- Bootstrap 5.2 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        /* CSS переменные для цветовой палитры */
+        :root {
+            --dark-blue: #0d1b2a;
+            --light-gray: #e0e1dd;
+            --teal: #2ec4b6;
+            --light-blue: #cbf3f0;
+            --white: #ffffff;
+            --dark-gray: #415a77;
+        }
+        
+        /* Общие стили */
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--teal);
+        }
+        
+        .section-title.center:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Шапка */
+        header {
+            background-color: var(--dark-blue);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--teal);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--light-gray);
+        }
+        
+        .navbar-nav .nav-link {
+            color: var(--light-gray);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--teal);
+        }
+        
+        /* Герой-секция */
+        .hero {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #1b2b42 100%);
+            color: var(--light-gray);
+            padding: 6rem 0 5rem;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero h1 {
+            color: var(--white);
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero .lead {
+            font-size: 1.3rem;
+            color: var(--light-blue);
+            margin-bottom: 2.5rem;
+        }
+        
+        .hero-btns .btn {
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--teal);
+            border-color: var(--teal);
+        }
+        
+        .btn-primary:hover {
+            background-color: #26a89a;
+            border-color: #26a89a;
+        }
+        
+        .btn-outline-light {
+            border-width: 2px;
+        }
+        
+        /* Секции */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .bg-light-gray {
+            background-color: #f8f9fa;
+        }
+        
+        /* Карточки возможностей */
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2.5rem 2rem;
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--teal);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--teal);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h4 {
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+        
+        /* Демо-блок */
+        .demo-container {
+            background-color: var(--dark-blue);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .demo-header {
+            background-color: #1b2b42;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .demo-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .demo-button.red {
+            background-color: #ff5f56;
+        }
+        
+        .demo-button.yellow {
+            background-color: #ffbd2e;
+        }
+        
+        .demo-button.green {
+            background-color: #27ca3f;
+        }
+        
+        .demo-title {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            text-align: center;
+            flex-grow: 1;
+            margin: 0;
+        }
+        
+        .demo-content {
+            padding: 2.5rem;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Граф для демо */
+        .graph-demo {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .graph-node {
+            fill: var(--teal);
+            stroke: var(--white);
+            stroke-width: 2;
+        }
+        
+        .graph-node.core {
+            fill: var(--light-blue);
+        }
+        
+        .graph-link {
+            stroke: var(--light-gray);
+            stroke-width: 1.5;
+            opacity: 0.7;
+        }
+        
+        .demo-caption {
+            text-align: center;
+            color: var(--dark-gray);
+            margin-top: 1.5rem;
+            font-style: italic;
+        }
+        
+        /* Шаги работы */
+        .steps-container {
+            position: relative;
+        }
+        
+        .step-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--teal);
+        }
+        
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: var(--teal);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Форма подписки */
+        .cta-section {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #1b2b42 100%);
+            color: var(--light-gray);
+            border-radius: 12px;
+            padding: 4rem 2rem;
+        }
+        
+        .cta-section h2, .cta-section p {
+            color: var(--light-gray);
+        }
+        
+        .cta-section .section-title:after {
+            background-color: var(--light-blue);
+        }
+        
+        .subscribe-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-control {
+            padding: 0.9rem 1.2rem;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            font-size: 1.1rem;
+        }
+        
+        .form-control:focus {
+            border-color: var(--teal);
+            box-shadow: 0 0 0 0.25rem rgba(46, 196, 182, 0.25);
+        }
+        
+        .privacy-note {
+            font-size: 0.85rem;
+            color: var(--light-blue);
+            margin-top: 0.5rem;
+        }
+        
+        /* Подвал */
+        footer {
+            background-color: var(--dark-blue);
+            color: var(--light-gray);
+            padding: 3rem 0 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo span {
+            color: var(--light-gray);
+        }
+        
+        .footer-description {
+            color: #adb5bd;
+            max-width: 300px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #1b2b42;
+            color: var(--light-gray);
+            border-radius: 50%;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--teal);
+            color: var(--dark-blue);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links h5 {
+            color: var(--light-gray);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--teal);
+        }
+        
+        .copyright {
+            border-top: 1px solid #1b2b42;
+            padding-top: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .lead {
+                font-size: 1.1rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+            
+            .hero-btns .btn {
+                display: block;
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .navbar-nav {
+                text-align: center;
+                padding-top: 1rem;
+            }
+            
+            .demo-content {
+                padding: 1.5rem;
+            }
+            
+            .footer-links {
+                margin-top: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .demo-content {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand logo" href="#">KG<span> Vis</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="bi bi-list" style="color: var(--light-gray); font-size: 1.8rem;"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#features">Возможности</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#demo">Демо</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#steps">Как это работает</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">О проекте</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Контакты</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Герой-секция -->
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <h1>KnowledgeGraph Vis: <br>Визуализируйте структуру науки</h1>
+                    <p class="lead">Инновационный веб-инструмент, который преобразует вашу коллекцию научных статей в интерактивный граф знаний. Автоматически находите ключевых авторов, центральные концепции и скрытые связи между исследовательскими направлениями.</p>
+                    <div class="hero-btns">
+                        <a href="#demo" class="btn btn-primary">Попробовать демо</a>
+                        <a href="#features" class="btn btn-outline-light">Узнать больше</a>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="d-none d-lg-block text-center">
+                        <div class="graph-demo">
+                            <svg width="100%" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Связи графа -->
+                                <line x1="100" y1="100" x2="200" y2="150" class="graph-link"/>
+                                <line x1="200" y1="150" x2="300" y2="100" class="graph-link"/>
+                                <line x1="200" y1="150" x2="200" y2="250" class="graph-link"/>
+                                <line x1="100" y1="200" x2="200" y2="150" class="graph-link"/>
+                                <line x1="300" y1="200" x2="200" y2="150" class="graph-link"/>
+                                <line x1="100" y1="100" x2="100" y2="200" class="graph-link"/>
+                                <line x1="300" y1="100" x2="300" y2="200" class="graph-link"/>
+                                <line x1="100" y1="100" x2="300" y2="100" class="graph-link"/>
+                                <line x1="100" y1="200" x2="300" y2="200" class="graph-link"/>
+                                
+                                <!-- Узлы графа -->
+                                <circle cx="100" cy="100" r="15" class="graph-node"/>
+                                <circle cx="200" cy="150" r="20" class="graph-node core"/>
+                                <circle cx="300" cy="100" r="15" class="graph-node"/>
+                                <circle cx="100" cy="200" r="15" class="graph-node"/>
+                                <circle cx="200" cy="250" r="15" class="graph-node"/>
+                                <circle cx="300" cy="200" r="15" class="graph-node"/>
+                                
+                                <!-- Подписи узлов -->
+                                <text x="100" y="80" text-anchor="middle" fill="var(--light-gray)" font-size="12">NLP</text>
+                                <text x="200" y="130" text-anchor="middle" fill="var(--light-gray)" font-size="14" font-weight="bold">Data Science</text>
+                                <text x="300" y="80" text-anchor="middle" fill="var(--light-gray)" font-size="12">ML</text>
+                                <text x="100" y="230" text-anchor="middle" fill="var(--light-gray)" font-size="12">Анализ</text>
+                                <text x="200" y="280" text-anchor="middle" fill="var(--light-gray)" font-size="12">Визуализация</text>
+                                <text x="300" y="230" text-anchor="middle" fill="var(--light-gray)" font-size="12">Графы</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Возможности -->
+    <section id="features" class="bg-light-gray">
+        <div class="container">
+            <h2 class="section-title">Возможности KnowledgeGraph Vis</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-diagram-3"></i>
+                        </div>
+                        <h4>Интерактивная визуализация графа</h4>
+                        <p>Исследуйте связи между научными работами, авторами и концепциями с помощью интуитивно понятного интерфейса.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-bar-chart"></i>
+                        </div>
+                        <h4>Анализ центральности и кластеров</h4>
+                        <p>Выявляйте ключевые работы и направления исследований с помощью алгоритмов сетевого анализа.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-upload"></i>
+                        </div>
+                        <h4>Загрузка данных в форматах BibTeX/CSV</h4>
+                        <p>Работайте с данными из популярных систем управления библиографией и баз данных научных публикаций.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-download"></i>
+                        </div>
+                        <h4>Экспорт результатов</h4>
+                        <p>Сохраняйте визуализации и аналитические отчеты в различных форматах для дальнейшего использования.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Демо-блок -->
+    <section id="demo">
+        <div class="container">
+            <h2 class="section-title center text-center">Посмотрите, как это работает</h2>
+            <div class="demo-container">
+                <div class="demo-header">
+                    <div class="demo-buttons">
+                        <div class="demo-button red"></div>
+                        <div class="demo-button yellow"></div>
+                        <div class="demo-button green"></div>
+                    </div>
+                    <h6 class="demo-title">KnowledgeGraph Vis - Демо-версия</h6>
+                </div>
+                <div class="demo-content">
+                    <div class="graph-demo">
+                        <svg width="100%" height="300" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Фон -->
+                            <rect width="500" height="300" fill="#0d1b2a"/>
+                            
+                            <!-- Связи графа -->
+                            <line x1="100" y1="100" x2="250" y2="150" class="graph-link"/>
+                            <line x1="250" y1="150" x2="400" y2="100" class="graph-link"/>
+                            <line x1="250" y1="150" x2="250" y2="250" class="graph-link"/>
+                            <line x1="100" y1="200" x2="250" y2="150" class="graph-link"/>
+                            <line x1="400" y1="200" x2="250" y2="150" class="graph-link"/>
+                            <line x1="100" y1="100" x2="400" y2="100" class="graph-link"/>
+                            <line x1="100" y1="200" x2="400" y2="200" class="graph-link"/>
+                            <line x1="100" y1="100" x2="100" y2="200" class="graph-link"/>
+                            <line x1="400" y1="100" x2="400" y2="200" class="graph-link"/>
+                            <line x1="150" y1="120" x2="350" y2="180" class="graph-link"/>
+                            <line x1="150" y1="180" x2="350" y2="120" class="graph-link"/>
+                            
+                            <!-- Узлы графа -->
+                            <circle cx="100" cy="100" r="12" class="graph-node"/>
+                            <circle cx="250" cy="150" r="18" class="graph-node core"/>
+                            <circle cx="400" cy="100" r="12" class="graph-node"/>
+                            <circle cx="100" cy="200" r="12" class="graph-node"/>
+                            <circle cx="250" cy="250" r="12" class="graph-node"/>
+                            <circle cx="400" cy="200" r="12" class="graph-node"/>
+                            <circle cx="150" cy="120" r="10" class="graph-node"/>
+                            <circle cx="150" cy="180" r="10" class="graph-node"/>
+                            <circle cx="350" cy="120" r="10" class="graph-node"/>
+                            <circle cx="350" cy="180" r="10" class="graph-node"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <p class="demo-caption">Интерактивная демо-версия появится в ближайшее время. Подпишитесь, чтобы узнать первым.</p>
+        </div>
+    </section>
+
+    <!-- Как это работает -->
+    <section id="steps" class="bg-light-gray">
+        <div class="container">
+            <h2 class="section-title">Как это работает</h2>
+            <div class="steps-container">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h4>Загрузите данные</h4>
+                            <p>Импортируйте вашу коллекцию научных статей в форматах BibTeX, CSV или через API популярных баз данных.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h4>Настройте параметры анализа</h4>
+                            <p>Определите, какие сущности (авторы, ключевые слова, журналы) и связи (цитирования, совместное употребление) вас интересуют.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <h4>Исследуйте и визуализируйте</h4>
+                            <p>Анализируйте полученный граф знаний, выявляйте тренды, центральные работы и скрытые связи в вашей области исследований.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О проекте -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">О проекте KnowledgeGraph Vis</h2>
+            <div class="row">
+                <div class="col-lg-8">
+                    <p class="lead">KnowledgeGraph Vis — это веб-инструмент для исследователей и аналитиков данных, который автоматически строит и визуализирует граф знаний из загруженного корпуса научных статей.</p>
+                    <p>Система использует алгоритмы NLP и сетевого анализа для выделения сущностей и связей между ними. Узлы графа представляют собой ключевые концепции, методы, авторов и журналы, а рёбра — связи между ними (цитирования, совместное употребление терминов).</p>
+                    <p>Цель проекта — помочь исследователям выявлять скрытые закономерности, основные исследовательские тренды и центральные работы в выбранной предметной области, экономя время на анализе литературы и ускоряя научные открытия.</p>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Для кого этот инструмент?</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-teal me-2"></i>Научные сотрудники</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-teal me-2"></i>Аспиранты и докторанты</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-teal me-2"></i>Аналитики данных</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-teal me-2"></i>Специалисты по наукометрии</li>
+                                <li><i class="bi bi-check-circle-fill text-teal me-2"></i>Исследователи в области Data Science</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма обратной связи -->
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2 class="section-title center text-center">Готовы исследовать по-новому?</h2>
+            <p class="text-center mb-5">Оставьте email, чтобы получить уведомление о запуске бета-теста и подробный дайджест возможностей KnowledgeGraph Vis.</p>
+            
+            <div class="subscribe-form">
+                <form id="subscribeForm">
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            <input type="email" class="form-control" id="emailInput" placeholder="Ваш email адрес" required>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary w-100" style="padding: 0.9rem; font-size: 1.1rem;">Подписаться</button>
+                        </div>
+                    </div>
+                    <div class="privacy-note text-center">
+                        <i class="bi bi-shield-check me-1"></i> Мы уважаем вашу конфиденциальность и не передаем ваши данные третьим лицам.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-logo">KG<span> Vis</span></div>
+                    <p class="footer-description">KnowledgeGraph Vis — инновационный веб-инструмент для визуализации и анализа научных знаний. Преобразуйте ваши данные в инсайты.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-github"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-links">
+                        <h5>Навигация</h5>
+                        <ul>
+                            <li><a href="#features">Возможности</a></li>
+                            <li><a href="#demo">Демо</a></li>
+                            <li><a href="#steps">Как это работает</a></li>
+                            <li><a href="#about">О проекте</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-links">
+                        <h5>Ресурсы</h5>
+                        <ul>
+                            <li><a href="#">Документация</a></li>
+                            <li><a href="#">Блог</a></li>
+                            <li><a href="#">Частые вопросы</a></li>
+                            <li><a href="#">Сообщество</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-links">
+                        <h5>Правовая информация</h5>
+                        <ul>
+                            <li><a href="#">Политика конфиденциальности</a></li>
+                            <li><a href="#">Условия использования</a></li>
+                            <li><a href="#contact">Обратная связь</a></li>
+                            <li><a href="#">Статус системы</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 KnowledgeGraph Vis. Исследовательский проект.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Кастомный JavaScript -->
+    <script>
+        // Плавная прокрутка при клике на ссылки навигации
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Закрываем мобильное меню после клика
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    if (navbarCollapse.classList.contains('show')) {
+                        const navbarToggler = document.querySelector('.navbar-toggler');
+                        navbarToggler.click();
+                    }
+                }
+            });
+        });
+        
+        // Обработка формы подписки
+        document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('emailInput');
+            const email = emailInput.value.trim();
+            
+            // Простая валидация email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(email)) {
+                alert('Пожалуйста, введите корректный email адрес.');
+                emailInput.focus();
+                return;
+            }
+            
+            // В реальном приложении здесь был бы AJAX запрос к серверу
+            alert('Спасибо! Мы сообщим вам о запуске.');
+            
+            // Очищаем поле ввода
+            emailInput.value = '';
+        });
+        
+        // Изменение стиля навбара при прокрутке
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            }
+        });
+    </script>
+</body>
+</html>

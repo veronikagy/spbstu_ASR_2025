@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Интерактивное резюме Софьи Бабахиной - исследователя в области прикладной математики и анализа данных">
+    <meta name="keywords" content="прикладная математика, анализ данных, машинное обучение, исследователь, Python, интервальный анализ">
+    <meta name="author" content="Софья Бабахина">
+    
+    <title>Софья Бабахина | Прикладная математика и анализ данных</title>
+    
+    <!-- Иконки и шрифты -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- Фавикон -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+    
+    <!-- Стили -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Мета-теги для соцсетей -->
+    <meta property="og:title" content="Софья Бабахина | Прикладная математика и анализ данных">
+    <meta property="og:description" content="Исследователь в области прикладной математики, анализа сигналов и машинного обучения">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80">
+    <meta property="og:type" content="website">
+</head>
+<body class="light-theme">
+    <!-- Переключатель темы -->
+    <button class="theme-toggle" aria-label="Переключить тему">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+    </button>
+
+    <!-- Переключатель языка -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="ru">RU</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#home" class="nav-logo animate__animated animate__fadeIn">
+                    <span class="logo-text">SB</span>
+                    <span class="logo-name">Софья Бабахина</span>
+                </a>
+                
+                <button class="nav-toggle" aria-label="Меню навигации">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link">Главная</a></li>
+                    <li><a href="#about" class="nav-link">Обо мне</a></li>
+                    <li><a href="#projects" class="nav-link">Проекты</a></li>
+                    <li><a href="#experience" class="nav-link">Опыт</a></li>
+                    <li><a href="#education" class="nav-link">Образование</a></li>
+                    <li><a href="#skills" class="nav-link">Навыки</a></li>
+                    <li><a href="#contact" class="nav-link">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <div class="container">
+            <div class="hero-content animate__animated animate__fadeInUp">
+                <div class="hero-text">
+                    <h4 class="hero-subtitle animate__animated animate__fadeIn">Прикладная математика & Анализ данных</h4>
+                    <h1 class="hero-title">Софья <span class="text-gradient">Бабахина</span></h1>
+                    <p class="hero-description">
+                        Студент-магистр и исследователь в области интервального анализа и машинного обучения.<br>
+                        Специализируюсь на обработке сигналов, анализе экспериментальных данных<br>
+                        и применении математических методов в физических исследованиях.
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary animate__animated animate__pulse animate__infinite animate__slower">
+                            <i class="fas fa-paper-plane"></i> Связаться
+                        </a>
+                        <a href="#projects" class="btn btn-secondary">
+                            <i class="fas fa-code"></i> Проекты
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="visual-element">
+                        <div class="math-symbol">∫</div>
+                        <div class="math-symbol">∑</div>
+                        <div class="math-symbol">σ</div>
+                        <div class="math-symbol">∇</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">5+</span>
+                    <span class="stat-text">Научных проектов</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3+</span>
+                    <span class="stat-text">Года исследований</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">10+</span>
+                    <span class="stat-text">Технологий освоено</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">2</span>
+                    <span class="stat-text">Конференции</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Обо мне -->
+        <section class="section about" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">ПРОФИЛЬ</span>
+                    <h2 class="section-title">Обо мне</h2>
+                    <p class="section-subtitle">Мой путь в математике и исследованиях</p>
+                </div>
+                
+                <div class="about-grid">
+                    <div class="about-text animate__animated" data-animate="fadeInLeft">
+                        <p>Мое увлечение математикой началось еще в школьные годы и переросло в профессиональную деятельность. Сейчас я продолжаю углублять знания в магистратуре, фокусируясь на применении современных математических методов для решения сложных исследовательских задач в области анализа данных и обработки сигналов.</p>
+                        <p>Основная область моих исследований — <strong>интервальный анализ и его применение в машинном обучении</strong>. Я разрабатываю методы интервальной линейной регрессии для работы с данными, содержащими неопределенности, что критически важно для экспериментальных исследований.</p>
+                        <p>В <strong>Физико-техническом институте им. Иоффе</strong> я работаю над анализом сигналов спектроскопии томсоновского рассеяния на установке токамак. Этот проект позволяет применять математические методы к реальным физическим экспериментам мирового уровня.</p>
+                        
+                        <div class="about-quote">
+                            <i class="fas fa-quote-left"></i>
+                            <p>Математика — это язык, на котором написана книга природы.</p>
+                            <cite>Галилео Галилей</cite>
+                        </div>
+                    </div>
+                    
+                    <div class="about-image animate__animated" data-animate="fadeInRight">
+                        <div class="image-placeholder">
+                            <div class="placeholder-content">
+                                <i class="fas fa-user-graduate"></i>
+                                <p>Студент-магистр и исследователь в области прикладной математики</p>
+                            </div>
+                        </div>
+                        <div class="about-highlights">
+                            <div class="highlight">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h4>Локация</h4>
+                                    <p>Санкт-Петербург, Россия</p>
+                                </div>
+                            </div>
+                            <div class="highlight">
+                                <i class="fas fa-briefcase"></i>
+                                <div>
+                                    <h4>Статус</h4>
+                                    <p>Студент-магистр СПбПУ, Исследователь в ФТИ им. Иоффе</p>
+                                </div>
+                            </div>
+                            <div class="highlight">
+                                <i class="fas fa-graduation-cap"></i>
+                                <div>
+                                    <h4>Образование</h4>
+                                    <p>СПбПУ, Прикладная математика (магистратура, 1 курс)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Научные проекты -->
+        <section class="section projects" id="projects">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">ИССЛЕДОВАНИЯ</span>
+                    <h2 class="section-title">Научные проекты</h2>
+                    <p class="section-subtitle">Ключевые исследовательские работы и разработки</p>
+                </div>
+                
+                <div class="projects-grid">
+                    <!-- Проект 1 -->
+                    <article class="project-card animate__animated" data-animate="fadeInUp">
+                        <div class="project-icon">
+                            <i class="fas fa-satellite-dish"></i>
+                        </div>
+                        <div class="project-content">
+                            <span class="project-category">Анализ сигналов</span>
+                            <h3 class="project-title">Интервальный анализ данных спектроскопии томсоновского рассеяния</h3>
+                            <p class="project-description">
+                                Разработка и применение методов интервального анализа для обработки данных спектроскопии на установке токамак. Создание алгоритмов для учета неопределенностей в экспериментальных измерениях.
+                            </p>
+                            <div class="project-tech">
+                                <span>Python</span>
+                                <span>Интервальный анализ</span>
+                                <span>Обработка сигналов</span>
+                            </div>
+                            <div class="project-status">
+                                <span class="status active">В процессе</span>
+                                <span class="project-date">2022 - настоящее время</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Проект 2 -->
+                    <article class="project-card animate__animated" data-animate="fadeInUp">
+                        <div class="project-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="project-content">
+                            <span class="project-category">Машинное обучение</span>
+                            <h3 class="project-title">Интервальная линейная регрессия для данных с неопределенностями</h3>
+                            <p class="project-description">
+                                Исследование и разработка методов интервальной регрессии для задач машинного обучения. Применение к реальным наборам данных с целью повышения точности предсказаний при наличии измерительных погрешностей.
+                            </p>
+                            <div class="project-tech">
+                                <span>Python</span>
+                                <span>Scikit-learn</span>
+                                <span>Интервальная математика</span>
+                            </div>
+                            <div class="project-status">
+                                <span class="status completed">Завершен</span>
+                                <span class="project-date">2021 - 2022</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Проект 3 -->
+                    <article class="project-card animate__animated" data-animate="fadeInUp">
+                        <div class="project-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="project-content">
+                            <span class="project-category">Обработка данных</span>
+                            <h3 class="project-title">Автоматизация предобработки экспериментальных данных физических установок</h3>
+                            <p class="project-description">
+                                Создание автоматизированного конвейера для очистки, нормализации и визуализации больших массивов экспериментальных данных. Внедрение методов машинного обучения для выявления аномалий и артефактов.
+                            </p>
+                            <div class="project-tech">
+                                <span>Python</span>
+                                <span>Pandas</span>
+                                <span>NumPy</span>
+                                <span>Автоматизация</span>
+                            </div>
+                            <div class="project-status">
+                                <span class="status active">В процессе</span>
+                                <span class="project-date">2023 - настоящее время</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Проект 4 -->
+                    <article class="project-card animate__animated" data-animate="fadeInUp">
+                        <div class="project-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="project-content">
+                            <span class="project-category">Образование</span>
+                            <h3 class="project-title">Учебное пособие по основам интервального анализа</h3>
+                            <p class="project-description">
+                                Разработка комплексного учебного пособия с практическими примерами применения интервального анализа в научных исследованиях. Материал включает теорию, алгоритмы и кейсы из физических экспериментов.
+                            </p>
+                            <div class="project-tech">
+                                <span>LaTeX</span>
+                                <span>Образование</span>
+                                <span>Научное письмо</span>
+                            </div>
+                            <div class="project-status">
+                                <span class="status completed">Завершен</span>
+                                <span class="project-date">2022</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Опыт работы -->
+        <section class="section experience" id="experience">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">КАРЬЕРА</span>
+                    <h2 class="section-title">Опыт работы</h2>
+                    <p class="section-subtitle">Профессиональный путь в науке и исследованиях</p>
+                </div>
+                
+                <div class="timeline">
+                    <!-- Опыт 1 -->
+                    <div class="timeline-item animate__animated" data-animate="fadeInUp">
+                        <div class="timeline-date">2021 - настоящее время</div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Младший научный сотрудник</h3>
+                            <span class="timeline-subtitle">Физико-технический институт им. А.Ф. Иоффе</span>
+                            <p class="timeline-description">
+                                Проведение исследований в области анализа сигналов спектроскопии томсоновского рассеяния на установке токамак. Разработка и применение методов интервального анализа и математической статистики.
+                            </p>
+                            <ul class="timeline-list">
+                                <li>Анализ сигналов с использованием методов математической статистики и интервального анализа</li>
+                                <li>Разработка алгоритмов предобработки экспериментальных данных</li>
+                                <li>Создание и тестирование моделей интервальной линейной регрессии</li>
+                                <li>Обработка больших массивов данных, их очистка, нормализация и визуализация</li>
+                                <li>Подготовка научных отчетов и публикаций</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Опыт 2 -->
+                    <div class="timeline-item animate__animated" data-animate="fadeInUp">
+                        <div class="timeline-date">2020 - 2021</div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Ассистент исследователя</h3>
+                            <span class="timeline-subtitle">СПбПУ, Кафедра прикладной математики</span>
+                            <p class="timeline-description">
+                                Участие в научно-исследовательских проектах по анализу данных и машинному обучению. Помощь в проведении вычислительных экспериментов и обработке результатов.
+                            </p>
+                            <ul class="timeline-list">
+                                <li>Участие в проектах по применению ML в научных исследованиях</li>
+                                <li>Обработка и визуализация данных с использованием Python</li>
+                                <li>Подготовка материалов для научных публикаций</li>
+                                <li>Помощь в организации научных семинаров</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Образование -->
+        <section class="section education" id="education">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">ОБРАЗОВАНИЕ</span>
+                    <h2 class="section-title">Образование и сертификаты</h2>
+                    <p class="section-subtitle">Академический путь и дополнительное обучение</p>
+                </div>
+                
+                <div class="education-grid">
+                    <!-- Образование 1 -->
+                    <article class="education-card animate__animated" data-animate="fadeInUp">
+                        <div class="education-header">
+                            <div class="education-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div>
+                                <h3 class="education-title">Магистратура (1 курс)</h3>
+                                <span class="education-subtitle">Прикладная математика и информатика</span>
+                            </div>
+                        </div>
+                        <div class="education-body">
+                            <p class="education-institution">Санкт-Петербургский политехнический университет Петра Великого (СПбПУ)</p>
+                            <p class="education-period">2025 – настоящее время</p>
+                            <p class="education-description">
+                                Углубленное изучение математических методов анализа данных, машинного обучения, интервального анализа и прикладной статистики. Научно-исследовательская работа в области обработки сигналов и интервального анализа.
+                            </p>
+                        </div>
+                    </article>
+                    
+                    <!-- Образование 2 -->
+                    <article class="education-card animate__animated" data-animate="fadeInUp">
+                        <div class="education-header">
+                            <div class="education-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <h3 class="education-title">Бакалавриат</h3>
+                                <span class="education-subtitle">Прикладная математика и информатика</span>
+                            </div>
+                        </div>
+                        <div class="education-body">
+                            <p class="education-institution">Санкт-Петербургский политехнический университет Петра Великого (СПбПУ)</p>
+                            <p class="education-period">2021 – 2025</p>
+                            <p class="education-description">
+                                Фундаментальная подготовка в области математического анализа, алгебры, дифференциальных уравнений, теории вероятностей и программирования. Дипломная работа в области интервального анализа данных.
+                            </p>
+                        </div>
+                    </article>
+                    
+                    <!-- Сертификаты -->
+                    <article class="education-card animate__animated" data-animate="fadeInUp">
+                        <div class="education-header">
+                            <div class="education-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div>
+                                <h3 class="education-title">Сертификаты и курсы</h3>
+                                <span class="education-subtitle">Дополнительное образование</span>
+                            </div>
+                        </div>
+                        <div class="education-body">
+                            <div class="certificates-list">
+                                <div class="certificate-item">
+                                    <h4>Машинное обучение и анализ данных</h4>
+                                    <p>Stepik · 2022</p>
+                                </div>
+                                <div class="certificate-item">
+                                    <h4>Python для анализа данных</h4>
+                                    <p>Stepik · 2021</p>
+                                </div>
+                                <div class="certificate-item">
+                                    <h4>Основы Data Science</h4>
+                                    <p>Цифровые кафедры · 2023</p>
+                                </div>
+                                <div class="certificate-item">
+                                    <h4>Участник конференции "Неделя Науки СПбПУ"</h4>
+                                    <p>СПбПУ · 2022</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Навыки -->
+        <section class="section skills" id="skills">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">КОМПЕТЕНЦИИ</span>
+                    <h2 class="section-title">Навыки и технологии</h2>
+                    <p class="section-subtitle">Технические и научные компетенции</p>
+                </div>
+                
+                <div class="skills-container">
+                    <div class="skills-category animate__animated" data-animate="fadeInLeft">
+                        <h3 class="skills-title">
+                            <i class="fas fa-calculator"></i>
+                            Математические методы
+                        </h3>
+                        <div class="skills-list">
+                            <div class="skill-item">
+                                <span class="skill-name">Интервальный анализ</span>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 95%"></div>
+                                </div>
+                                <span class="skill-percent">95%</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Математическая статистика</span>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 90%"></div>
+                                </div>
+                                <span class="skill-percent">90%</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Обработка сигналов</span>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 85%"></div>
+                                </div>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Машинное обучение</span>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 80%"></div>
+                                </div>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skills-category animate__animated" data-animate="fadeInRight">
+                        <h3 class="skills-title">
+                            <i class="fas fa-code"></i>
+                            Технологии и инструменты
+                        </h3>
+                        <div class="skills-list">
+                            <div class="skill-item">
+                                <span class="skill-name">Python (научный стек)</span>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 92%"></div>
+                                </div>
+                                <span class="skill-percent">92%</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Linux / Git</span>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 85%"></div>
+                                </div>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">SQL / Базы данных</span>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 75%"></div>
+                                </div>
+                                <span class="skill-percent">75%</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">LaTeX / Научное письмо</span>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 88%"></div>
+                                </div>
+                                <span class="skill-percent">88%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skills-tags">
+                    <span class="skill-tag">NumPy</span>
+                    <span class="skill-tag">Pandas</span>
+                    <span class="skill-tag">Scikit-learn</span>
+                    <span class="skill-tag">Matplotlib</span>
+                    <span class="skill-tag">Jupyter</span>
+                    <span class="skill-tag">SciPy</span>
+                    <span class="skill-tag">GitHub</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Bash</span>
+                    <span class="skill-tag">Анализ данных</span>
+                    <span class="skill-tag">Визуализация</span>
+                    <span class="skill-tag">Научные вычисления</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Контакты -->
+        <section class="section contact" id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">СВЯЗЬ</span>
+                    <h2 class="section-title">Связаться со мной</h2>
+                    <p class="section-subtitle">Готовы к научному сотрудничеству и новым проектам</p>
+                </div>
+                
+                <div class="contact-grid">
+                    <div class="contact-info animate__animated" data-animate="fadeInLeft">
+                        <h3 class="contact-info-title">Контактная информация</h3>
+                        <p class="contact-info-text">
+                            Я открыта для сотрудничества в научных проектах, исследовательской деятельности и обсуждения новых идей в области прикладной математики и анализа данных.
+                        </p>
+                        
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4>Email</h4>
+                                    <a href="mailto:sofya.babakhina@example.com">sofya.babakhina@example.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4>Локация</h4>
+                                    <p>Санкт-Петербург, Россия</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <div>
+                                    <h4>Онлайн-профили</h4>
+                                    <div class="social-links">
+                                        <a href="https://linkedin.com/in/sofya-babakhina" target="_blank">
+                                            <i class="fab fa-linkedin"></i> LinkedIn
+                                        </a>
+                                        <a href="https://github.com/sofya-babakhina" target="_blank">
+                                            <i class="fab fa-github"></i> GitHub
+                                        </a>
+                                        <a href="#" target="_blank">
+                                            <i class="fas fa-graduation-cap"></i> Google Scholar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form-container animate__animated" data-animate="fadeInRight">
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Ваше имя *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject">Тема сообщения *</label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Сообщение *</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fas fa-paper-plane"></i> Отправить сообщение
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">SB</div>
+                    <h3 class="footer-name">Софья Бабахина</h3>
+                    <p class="footer-tagline">Студент-магистр и исследователь в области прикладной математики и анализа данных</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 class="footer-links-title">Быстрые ссылки</h4>
+                    <ul class="footer-nav">
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#about">Обо мне</a></li>
+                        <li><a href="#projects">Проекты</a></li>
+                        <li><a href="#experience">Опыт</a></li>
+                        <li><a href="#education">Образование</a></li>
+                        <li><a href="#skills">Навыки</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4 class="footer-contact-title">Контакты</h4>
+                    <div class="footer-contact-info">
+                        <a href="mailto:sofya.babakhina@example.com">
+                            <i class="fas fa-envelope"></i> sofya.babakhina@example.com
+                        </a>
+                        <div class="footer-social">
+                            <a href="https://linkedin.com/in/sofya-babakhina" target="_blank">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/sofya-babakhina" target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" target="_blank">
+                                <i class="fas fa-graduation-cap"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="copyright">&copy; <span id="currentYear"></span> Софья Бабахина. Все права защищены.</p>
+                <p class="footer-note">Резюме студента-магистра и исследователя в области прикладной математики и анализа данных</p>
+                <p class="footer-credits">Сайт разработан с использованием HTML, CSS и Vanilla JavaScript</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Кнопка "Наверх" -->
+    <button class="scroll-top" aria-label="Наверх">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Модальное окно для успешной отправки -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="modal-title">Сообщение отправлено!</h3>
+            <p class="modal-text">Спасибо за ваше сообщение. Я свяжусь с вами в ближайшее время.</p>
+            <button class="btn btn-primary modal-close">ОК</button>
+        </div>
+    </div>
+
+    <!-- Скрипты -->
+    <script src="script.js"></script>
+    <script src="i18n.js"></script>
+</body>
+</html>

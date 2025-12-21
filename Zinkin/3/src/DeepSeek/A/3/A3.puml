@@ -1,0 +1,51 @@
+@startuml
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Читатель" as Reader
+actor "Библиотекарь" as Librarian
+actor "Администратор" as Admin
+
+rectangle "Система управления библиотекой" {
+  (Поиск книг) as SearchBooks
+  (Просмотр каталога) as BrowseCatalogue
+  (Бронирование книги) as ReserveBook
+  (Продление срока) as RenewLoan
+  (Управление избранным) as ManageFavorites
+
+  (Оформление выдачи) as CheckoutBook
+  (Приём возврата) as ReturnBook
+  (Создание отчётов) as GenerateReports
+  (Редактирование каталога) as EditCatalogue
+
+  (Полный контроль каталога) as ManageCatalogue
+  (Просмотр системной информации) as ViewSystemInfo
+  (Доступ ко всем отчётам) as AccessAllReports
+
+  SearchBooks --> BrowseCatalogue : включает
+}
+
+' Связи для Читателя
+Reader --> SearchBooks
+Reader --> BrowseCatalogue
+Reader --> ReserveBook
+Reader --> RenewLoan
+Reader --> ManageFavorites
+
+' Связи для Библиотекаря
+Librarian --> CheckoutBook
+Librarian --> ReturnBook
+Librarian --> GenerateReports
+Librarian --> EditCatalogue
+
+' Связи для Администратора
+Admin --> ManageCatalogue
+Admin --> ViewSystemInfo
+Admin --> AccessAllReports
+
+' Связи между ролями и общими функциями
+Librarian --> BrowseCatalogue
+Admin --> GenerateReports
+
+@enduml

@@ -1,0 +1,52 @@
+@startuml
+' Определение классов
+class Library {
+    -name: String
+    -address: String
+    -books: List<Book>
+    -users: List<User>
+    +addBook(book: Book)
+    +removeBook(book: Book)
+    +registerUser(user: User)
+}
+
+class Book {
+    -title: String
+    -author: String
+    -isbn: String
+    -status: String
+    +checkAvailability(): Boolean
+}
+
+class User {
+    -name: String
+    -userId: String
+    -loans: List<Loan>
+    +borrowBook(book: Book)
+    +returnBook(book: Book)
+}
+
+class Librarian {
+    -employeeId: String
+    +addBook(book: Book, library: Library)
+    +removeBook(book: Book, library: Library)
+    +manageUser(user: User)
+}
+
+class Loan {
+    -loanDate: Date
+    -returnDate: Date
+    -book: Book
+    -user: User
+    +isOverdue(): Boolean
+}
+
+' Определение связей
+Library "1" -- "0..*" Book : contains
+Library "1" -- "0..*" User : registers
+User "1" -- "0..*" Loan : has
+Book "1" -- "0..*" Loan : involved in
+Librarian "1" -- "1" Library : manages
+
+@enduml
+

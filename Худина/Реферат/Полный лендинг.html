@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KnowledgeGraph Vis | Визуализация исследовательских ландшафтов</title>
+    <!-- Bootstrap 5.2 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --color-primary: #0d1b2a;
+            --color-secondary: #e0e1dd;
+            --color-accent: #2ec4b6;
+            --color-accent-light: #cbf3f0;
+            --color-white: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--color-primary);
+            line-height: 1.6;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--color-accent) !important;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #1b2b3a 100%);
+            color: var(--color-secondary);
+            padding: 6rem 0;
+        }
+        .btn-primary {
+            background-color: var(--color-accent);
+            border-color: var(--color-accent);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+        }
+        .btn-primary:hover {
+            background-color: #26a89a;
+            border-color: #26a89a;
+        }
+        .feature-card {
+            border: none;
+            border-radius: 0.5rem;
+            transition: transform 0.3s ease;
+            height: 100%;
+            background: var(--color-white);
+            box-shadow: 0 4px 12px rgba(13, 27, 42, 0.08);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+        .demo-container {
+            background: var(--color-primary);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .demo-window {
+            background: #1a1a2e;
+            border-radius: 0.5rem;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        .graph-node {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--color-accent);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        .step-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .step-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--color-accent-light);
+        }
+        .step-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .step-item::before {
+            content: '';
+            position: absolute;
+            left: -2.3rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: var(--color-accent);
+            border: 3px solid var(--color-white);
+            box-shadow: 0 0 0 3px var(--color-accent-light);
+        }
+        .footer {
+            background: var(--color-primary);
+            color: var(--color-secondary);
+            padding: 3rem 0;
+        }
+        .form-control:focus {
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 0.25rem rgba(46, 196, 182, 0.25);
+        }
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 4rem 0;
+            }
+            .step-timeline::before {
+                left: 1.5rem;
+            }
+            .step-item::before {
+                left: -0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fs-3" href="#">KG Vis</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#features">Возможности</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#demo">Демо</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#steps">Как это работает</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">О проекте</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">KnowledgeGraph Vis<br><span class="text-accent">Визуализируйте структуру науки.</span></h1>
+                    <p class="lead mb-4">Инновационный веб-инструмент для анализа научных публикаций. Преобразуйте коллекции статей в интерактивные графы знаний, выявляйте ключевых авторов, центральные концепции и скрытые исследовательские тренды.</p>
+                    <a href="#demo" class="btn btn-primary btn-lg me-3">Попробовать демо</a>
+                    <a href="#features" class="btn btn-outline-light btn-lg">Узнать больше</a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="demo-window mt-5 mt-lg-0" id="hero-graph">
+                        <!-- Граф будет сгенерирован JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold">Ключевые возможности</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card p-4">
+                        <div class="feature-icon"><i class="bi bi-diagram-3"></i></div>
+                        <h4>Интерактивная визуализация</h4>
+                        <p>Динамическое исследование графа с масштабированием, фильтрацией по времени и типу узла.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card p-4">
+                        <div class="feature-icon"><i class="bi bi-graph-up"></i></div>
+                        <h4>Сетевой анализ</h4>
+                        <p>Расчет метрик центральности, выявление сообществ и структурных паттернов.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card p-4">
+                        <div class="feature-icon"><i class="bi bi-file-earmark-arrow-up"></i></div>
+                        <h4>Гибкая загрузка данных</h4>
+                        <p>Поддержка форматов BibTeX, CSV и интеграция с репозиториями arXiv, Crossref.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card p-4">
+                        <div class="feature-icon"><i class="bi bi-download"></i></div>
+                        <h4>Экспорт результатов</h4>
+                        <p>Сохранение графов, метрик и визуализаций для дальнейшего анализа и отчетности.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo -->
+    <section id="demo" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold">Посмотрите, как это работает</h2>
+            <div class="demo-container">
+                <div class="demo-window" id="demo-graph">
+                    <!-- Граф будет сгенерирован JavaScript -->
+                </div>
+                <p class="text-center text-white mt-3">Интерактивная демо-версия появится в ближайшее время. Подпишитесь, чтобы узнать первым.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Steps -->
+    <section id="steps" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold">Как это работает</h2>
+            <div class="step-timeline">
+                <div class="step-item">
+                    <h4>1. Загрузите данные</h4>
+                    <p>Загрузите корпус научных публикаций в формате BibTeX или CSV. Система автоматически извлечет метаданные.</p>
+                </div>
+                <div class="step-item">
+                    <h4>2. Настройте параметры анализа</h4>
+                    <p>Выберите алгоритмы для выделения сущностей и связей, настройте параметры фильтрации и визуализации.</p>
+                </div>
+                <div class="step-item">
+                    <h4>3. Исследуйте и визуализируйте</h4>
+                    <p>Анализируйте интерактивный граф, выявляйте кластеры, ключевые работы и тренды в вашей области.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Form -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="fw-bold mb-4">Готовы исследовать по-новому?</h2>
+                    <p class="mb-5">Оставьте email, чтобы получить уведомление о запуске бета-теста и подробный дайджест возможностей KnowledgeGraph Vis.</p>
+                    <form id="subscribe-form" class="row g-3 justify-content-center">
+                        <div class="col-auto">
+                            <input type="email" class="form-control form-control-lg" id="email-input" placeholder="Ваш email" required>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary btn-lg">Подписаться</button>
+                        </div>
+                    </form>
+                    <p class="small text-muted mt-3">Мы уважаем вашу конфиденциальность. Ваш email будет использован только для уведомлений о проекте.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h3 class="mb-3">KG Vis</h3>
+                    <p>Инструмент для визуализации и анализа исследовательских ландшафтов на основе графов знаний.</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="mb-3">Ссылки</h5>
+                    <a href="#features" class="d-block text-secondary mb-2">Возможности</a>
+                    <a href="#demo" class="d-block text-secondary mb-2">Демо</a>
+                    <a href="#contact" class="d-block text-secondary mb-2">Контакты</a>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-3">Социальные сети</h5>
+                    <a href="#" class="text-secondary me-3"><i class="bi bi-twitter fs-5"></i></a>
+                    <a href="#" class="text-secondary me-3"><i class="bi bi-github fs-5"></i></a>
+                    <a href="#" class="text-secondary me-3"><i class="bi bi-telegram fs-5"></i></a>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: #2a3b4d;">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">© 2025 KnowledgeGraph Vis. Исследовательский проект.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-secondary">Политика конфиденциальности</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Генерация графа для демо
+        function createGraphNodes(containerId, nodeCount) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            for(let i = 0; i < nodeCount; i++) {
+                const node = document.createElement('div');
+                node.className = 'graph-node';
+                node.style.width = Math.random() * 30 + 15 + 'px';
+                node.style.height = node.style.width;
+                node.style.left = Math.random() * 85 + '%';
+                node.style.top = Math.random() * 85 + '%';
+                container.appendChild(node);
+            }
+        }
+
+        // Обработка формы
+        document.getElementById('subscribe-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('email-input');
+            if(emailInput.checkValidity()) {
+                alert('Спасибо! Мы сообщим вам о запуске.');
+                emailInput.value = '';
+            } else {
+                alert('Пожалуйста, введите корректный email адрес.');
+            }
+        });
+
+        // Инициализация графов при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            createGraphNodes('hero-graph', 25);
+            createGraphNodes('demo-graph', 35);
+        });
+    </script>
+</body>
+</html>

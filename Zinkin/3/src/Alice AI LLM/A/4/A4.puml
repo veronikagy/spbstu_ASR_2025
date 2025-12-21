@@ -1,0 +1,62 @@
+@startuml
+left to right direction
+
+rectangle "Система управления библиотекой" {
+  usecase (Просмотреть каталог) as UC1
+  usecase (Искать книгу) as UC2
+  usecase (Бронировать книгу) as UC3
+  usecase (Продлить срок пользования) as UC4
+  usecase (Добавить книгу в избранное) as UC5
+  usecase (Просмотреть свои бронирования) as UC6
+  
+  usecase (Выдать книгу) as UC7
+  usecase (Принять возврат книги) as UC8
+  usecase (Добавить книгу в каталог) as UC9
+  usecase (Формировать отчёт по книгам) as UC10
+  
+  usecase (Просматривать отчёты) as UC11
+  usecase (Удалять книги из каталога) as UC12
+  usecase (Мониторить состояние системы) as UC13
+  
+  usecase (Проверка наличия книги) as UC14
+  usecase (Проверка задолженности) as UC15
+  usecase (Резервирование книги) as UC16
+  usecase (Начисление штрафа за просрочку) as UC17
+  usecase (Просмотр задолженностей читателей) as UC18
+}
+
+actor Читатель as A1
+actor Библиотекарь as A2
+actor Администратор as A3
+
+A1 --|> A2 : наследует
+A2 --|> A3 : наследует
+
+A1 --> UC1 : использует
+A1 --> UC2 : использует
+A1 --> UC3 : использует
+A1 --> UC4 : использует
+A1 --> UC5 : использует
+A1 --> UC6 : использует
+
+A2 --> UC7 : использует
+A2 --> UC8 : использует
+A2 --> UC9 : использует
+A2 --> UC10 : использует
+
+A3 --> UC11 : использует
+A3 --> UC12 : использует
+A3 --> UC13 : использует
+
+UC3 ...> UC14 : include
+UC4 ...> UC15 : include
+
+UC7 ...> UC14 : include
+UC7 ..|> UC16 : extend
+
+UC8 ...> UC15 : include
+UC8 ..|> UC17 : extend
+
+UC10 ...> UC18 : include
+@enduml
+

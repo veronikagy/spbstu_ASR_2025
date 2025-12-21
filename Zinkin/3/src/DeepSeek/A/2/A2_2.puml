@@ -1,0 +1,83 @@
+@startuml
+
+left to right direction
+
+actor "Читатель" as Reader
+actor "Библикарь" as Librarian
+actor "Администратор" as Admin
+
+rectangle "Система управления библиотекой" {
+  usecase "Авторизация в системе" as Login
+  
+  rectangle "Личный кабинет читателя" {
+    (Вход в личный кабинет) as PersonalAccount
+    (Бронирование книги) as ReserveBook
+    (Продление срока пользования) as RenewLoan
+    (Добавление в избранное) as AddToFavorites
+  }
+  
+  rectangle "Работа с каталогом" {
+    (Просмотр каталога книг) as ViewCatalog
+    (Поиск книг) as SearchBooks
+  }
+  
+  rectangle "Обслуживание читателей" {
+    (Выдача книги читателю) as LendBook
+    (Принятие возврата книги) as ReturnBook
+    (Регистрация нового читателя) as RegisterReader
+  }
+  
+  rectangle "Управление каталогом" {
+    (Добавление книги в каталог) as AddBook
+    (Удаление книги из каталога) as RemoveBook
+    (Редактирование информации о книге) as EditBook
+  }
+  
+  rectangle "Администрирование" {
+    (Формирование отчёта) as GenerateReport
+    (Управление учётными записями) as ManageAccounts
+  }
+}
+
+' Связи для Читателя
+Reader --> ViewCatalog
+Reader --> SearchBooks
+Reader --> Login
+Reader --> PersonalAccount
+PersonalAccount --> ReserveBook
+PersonalAccount --> RenewLoan
+PersonalAccount --> AddToFavorites
+
+' Связи для Библиотекаря
+Librarian --> Login
+Librarian --> LendBook
+Librarian --> ReturnBook
+Librarian --> RegisterReader
+Librarian --> ViewCatalog
+Librarian --> SearchBooks
+
+' Связи для Администратора
+Admin --> Login
+Admin --> GenerateReport
+Admin --> AddBook
+Admin --> RemoveBook
+Admin --> EditBook
+Admin --> ManageAccounts
+
+' Обязательные зависимости
+ReserveBook .> Login : include
+RenewLoan .> Login : include
+LendBook .> Login : include
+ReturnBook .> Login : include
+PersonalAccount .> Login : include
+
+' Дополнительные связи
+ViewCatalog <|-- SearchBooks : extend
+
+note right of Admin
+  Администратор также имеет
+  доступ ко всем функциям
+  Библиотекаря и Читателя
+end note
+
+@enduml

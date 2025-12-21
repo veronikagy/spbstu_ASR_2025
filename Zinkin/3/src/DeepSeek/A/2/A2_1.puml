@@ -1,0 +1,70 @@
+@startuml
+
+left to right direction
+
+actor "Читатель" as Reader
+actor "Библикарь" as Librarian
+actor "Администратор" as Admin
+
+rectangle "Система управления библиотекой" {
+  (Просмотр каталога книг) as ViewCatalog
+  (Поиск книг) as SearchBooks
+  (Авторизация в системе) as Login
+  (Вход в личный кабинет) as PersonalAccount
+  (Бронирование книги) as ReserveBook
+  (Продление срока пользования) as RenewLoan
+  (Добавление в избранное) as AddToFavorites
+
+  (Выдача книги читателю) as LendBook
+  (Принятие возврата книги) as ReturnBook
+  (Регистрация нового читателя) as RegisterReader
+
+  (Формирование отчёта) as GenerateReport
+  (Добавление книги в каталог) as AddBook
+  (Удаление книги из каталога) as RemoveBook
+  (Редактирование информации о книге) as EditBook
+  (Управление учётными записями) as ManageAccounts
+}
+
+' Связи акторов с вариантами использования
+Reader --> ViewCatalog
+Reader --> SearchBooks
+Reader --> Login
+Reader --> PersonalAccount
+Reader --> ReserveBook
+Reader --> RenewLoan
+Reader --> AddToFavorites
+
+Librarian --> Login
+Librarian --> LendBook
+Librarian --> ReturnBook
+Librarian --> RegisterReader
+Librarian --> ViewCatalog
+Librarian --> SearchBooks
+
+Admin --> Login
+Admin --> GenerateReport
+Admin --> AddBook
+Admin --> RemoveBook
+Admin --> EditBook
+Admin --> ManageAccounts
+Admin --> ViewCatalog
+
+' Связи между вариантами использования (include/extend)
+
+' Вход в кабинет требует авторизации
+PersonalAccount .> Login : include
+
+' Для бронирования и продления нужен вход в систему
+ReserveBook .> Login : include
+RenewLoan .> Login : include
+AddToFavorites .> Login : include
+
+' Для выдачи и возврата книги librarian должен быть в системе
+LendBook .> Login : include
+ReturnBook .> Login : include
+
+' Поиск и просмотр каталога часто связаны
+ViewCatalog <|-- SearchBooks : extend
+
+@enduml

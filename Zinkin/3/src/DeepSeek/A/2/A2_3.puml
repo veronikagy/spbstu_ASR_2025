@@ -1,0 +1,50 @@
+@startuml
+
+left to right direction
+
+actor "Читатель" as Reader
+actor "Библикарь" as Librarian
+actor "Администратор" as Admin
+
+rectangle "Система управления библиотекой" {
+  (Поиск и просмотр каталога) as ViewCatalog
+  (Авторизация в системе) as Login
+  (Бронирование книги) as ReserveBook
+  (Продление срока пользования) as RenewLoan
+  (Добавление в избранное) as AddToFavorites
+  
+  (Выдача книги) as LendBook
+  (Принятие возврата) as ReturnBook
+  (Регистрация читателя) as RegisterReader
+  
+  (Формирование отчётов) as GenerateReport
+  (Управление книгами) as ManageBooks
+  (Управление пользователями) as ManageUsers
+}
+
+' Читатель
+Reader --> ViewCatalog
+Reader --> Login
+Reader --> ReserveBook
+Reader --> RenewLoan
+Reader --> AddToFavorites
+
+' Библиотекарь
+Librarian --> Login
+Librarian --> LendBook
+Librarian --> ReturnBook
+Librarian --> RegisterReader
+Librarian --> ViewCatalog
+
+' Администратор
+Admin --> Login
+Admin --> GenerateReport
+Admin --> ManageBooks
+Admin --> ManageUsers
+
+' Базовые зависимости
+ReserveBook --> Login
+RenewLoan --> Login
+AddToFavorites --> Login
+
+@enduml

@@ -1,0 +1,58 @@
+@startuml
+
+left to right direction
+
+actor "Читатель" as Reader
+actor "Библиотекарь" as Librarian
+actor "Администратор" as Admin
+
+Admin -up-|> Librarian
+
+rectangle "Система управления библиотекой" as LibrarySystem {
+  usecase "Просмотреть каталог" as UC1
+  usecase "Искать книгу" as UC2
+  usecase "Бронировать книгу" as UC3
+  usecase "Проверка наличия книги" as UC4
+  usecase "Продлить срок пользования" as UC5
+  usecase "Проверка задолженности" as UC6
+  usecase "Добавить книгу в избранное" as UC7
+  usecase "Просмотреть свои бронирования" as UC8
+  
+  usecase "Выдать книгу" as UC9
+  usecase "Резервирование книги" as UC10
+  usecase "Принять возврат книги" as UC11
+  usecase "Начисление штрафа за просрочку" as UC12
+  usecase "Добавить книгу в каталог" as UC13
+  usecase "Формировать отчёт по книгам" as UC14
+  usecase "Просмотр задолженностей читателей" as UC15
+  
+  usecase "Просматривать отчёты" as UC16
+  usecase "Удалять книги из каталога" as UC17
+  usecase "Мониторить состояние системы" as UC18
+}
+
+Reader --> UC1
+Reader --> UC2
+Reader --> UC3
+Reader --> UC5
+Reader --> UC7
+Reader --> UC8
+
+Librarian --> UC9
+Librarian --> UC11
+Librarian --> UC13
+Librarian --> UC14
+
+Admin --> UC16
+Admin --> UC17
+Admin --> UC18
+
+UC3 .> UC4 : include
+UC5 .> UC6 : include
+UC9 .> UC4 : include
+UC9 ..> UC10 : extend
+UC11 .> UC6 : include
+UC11 ..> UC12 : extend
+UC14 .> UC15 : include
+
+@enduml

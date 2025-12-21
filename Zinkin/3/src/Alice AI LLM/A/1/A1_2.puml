@@ -1,0 +1,66 @@
+@startuml
+left to right direction
+
+' Действующие лица (акторы)
+actor Читатель as reader
+actor Библиотекарь as librarian
+actor Администратор as admin
+
+' Варианты использования (use cases)
+usecase "Зарегистрироваться" as uc_register
+usecase "Авторизоваться" as uc_login
+usecase "Поиск книг" as uc_search
+usecase "Просмотр деталей книги" as uc_view_details
+usecase "Бронирование книги" as uc_reserve
+usecase "Взять книгу" as uc_borrow
+usecase "Вернуть книгу" as uc_return
+usecase "Продлить срок" as uc_extend
+usecase "Просмотр личных данных" as uc_viewprofile
+usecase "Управление читателями" as uc_manage_readers
+usecase "Управление книгами" as uc_manage_books
+usecase "Добавление книги" as uc_add_book
+usecase "Редактирование книги" as uc_edit_book
+usecase "Удаление книги" as uc_delete_book
+usecase "Формирование отчётов" as uc_reports
+
+' Связи акторов с вариантами использования
+reader --|> uc_register
+reader --|> uc_login
+reader --|> uc_search
+reader --|> uc_view_details
+reader --|> uc_reserve
+reader --|> uc_borrow
+reader --|> uc_return
+reader --|> uc_extend
+reader --|> uc_viewprofile
+
+librarian --|> uc_login
+librarian --|> uc_search
+librarian --|> uc_view_details
+librarian --|> uc_borrow
+librarian --|> uc_return
+librarian --|> uc_extend
+librarian --|> uc_manage_readers
+librarian --|> uc_manage_books
+
+admin --|> uc_login
+admin --|> uc_manage_readers
+admin --|> uc_add_book
+admin --|> uc_edit_book
+admin --|> uc_delete_book
+admin --|> uc_reports
+
+' Правильные связи <<include>>
+uc_login .> uc_register <<include>>
+uc_search .> uc_view_details <<include>>
+
+' Графические настройки
+skinparam packageStyle rectangle
+skinparam useCase {
+    BackgroundColor<<admin>> LightBlue
+    BackgroundColor<<librarian>> LightGreen
+    BackgroundColor<<reader>> LightYellow
+}
+
+@enduml
+
