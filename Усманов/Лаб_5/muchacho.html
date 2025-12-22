@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUCHACHO | Мексиканская кухня</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- СТИЛИ (CSS) --- */
+        :root {
+            --color-brown: #5D4037;
+            --color-white: #FFFFFF;
+            --color-yellow: #FFC107;
+            --color-yellow-light: #FFF8E1;
+            --color-green: #2E7D32;
+            --color-red: #D32F2F;
+            --font-heading: 'Lobster', cursive;
+            --font-body: 'Roboto', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-yellow-light);
+            color: var(--color-brown);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Кнопки */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: var(--font-body);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary {
+            background-color: var(--color-brown);
+            color: var(--color-white);
+        }
+
+        .btn-success {
+            background-color: var(--color-green);
+            color: var(--color-white);
+            font-size: 1.2rem;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Шапка */
+        .header {
+            background-color: var(--color-brown);
+            color: var(--color-yellow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+        }
+
+        .nav a {
+            color: var(--color-white);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: var(--color-yellow);
+        }
+
+        /* Hero секция */
+        .hero-section {
+            background: linear-gradient(135deg, var(--color-yellow) 0%, #FF9800 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero-card {
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: 15px;
+            display: inline-block;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 2px solid var(--color-brown);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .hero-card h1 {
+            font-family: var(--font-heading);
+            color: var(--color-green);
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .auth-form input {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        /* Меню */
+        .menu-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--color-brown);
+            margin-bottom: 30px;
+        }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 2px solid var(--color-brown);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--color-brown);
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background-color: var(--color-green);
+            color: var(--color-white);
+            border-color: var(--color-green);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-item {
+            background: var(--color-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            border-bottom: 5px solid var(--color-green);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-img {
+            width: 100%;
+            height: 200px;
+            background-color: #eee;
+            object-fit: cover;
+        }
+
+        .item-content {
+            padding: 20px;
+        }
+
+        .item-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .item-desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+            min-height: 40px;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--color-brown);
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            background: var(--color-brown);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Корзина */
+        .cart-section {
+            padding: 60px 0;
+            background-color: var(--color-white);
+            border-top: 2px solid var(--color-brown);
+        }
+
+        .cart-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-title {
+            font-weight: bold;
+            flex: 1;
+        }
+
+        .cart-summary {
+            margin-top: 30px;
+            text-align: right;
+            padding: 20px;
+            background: var(--color-yellow-light);
+            border-radius: 10px;
+        }
+
+        .total-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .empty-cart-msg {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-style: italic;
+        }
+
+        /* Подвал */
+        .footer {
+            background-color: var(--color-brown);
+            color: var(--color-white);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .hero-card h1 {
+                font-size: 2.2rem;
+            }
+            .menu-tabs {
+                overflow-x: auto;
+                padding-bottom: 10px;
+                justify-content: flex-start;
+            }
+            .tab-btn {
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">MUCHACHO 🌮</div>
+            <nav class="nav">
+                <a href="#auth">Войти</a>
+                <a href="#menu">Меню</a>
+                <a href="#cart">Корзина <span id="cart-count">(0)</span></a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="auth" class="hero-section">
+        <div class="container">
+            <div class="hero-card">
+                <h1>Hola, Amigo!</h1>
+                <p>Добро пожаловать в Muchacho. Заказывай быстро, ешь вкусно!</p>
+                <form class="auth-form" onsubmit="event.preventDefault(); alert('Вы авторизованы!'); document.getElementById('menu').scrollIntoView();">
+                    <input type="text" placeholder="Ваше имя" required>
+                    <input type="number" placeholder="Номер столика" min="1" max="20" required>
+                    <button type="submit" class="btn btn-primary">Начать заказ</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="menu-section">
+        <div class="container">
+            <h2 class="section-title">Наше Меню</h2>
+
+            <div class="menu-tabs">
+                <button class="tab-btn active" data-category="all">Все</button>
+                <button class="tab-btn" data-category="starters">Стартеры</button>
+                <button class="tab-btn" data-category="salads">Салаты</button>
+                <button class="tab-btn" data-category="soups">Супы</button>
+                <button class="tab-btn" data-category="desserts">Десерты</button>
+                <button class="tab-btn" data-category="drinks">Напитки</button>
+            </div>
+
+            <div id="menu-grid" class="menu-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="cart" class="cart-section">
+        <div class="container">
+            <h2 class="section-title">Ваш Заказ</h2>
+            <div class="cart-wrapper">
+                <div id="cart-items" class="cart-items">
+                    <p class="empty-cart-msg">Корзина пуста, амиго. Добавь немного огня!</p>
+                </div>
+                <div class="cart-summary">
+                    <div class="total-price">Итого: <span id="total-amount">0</span> ₽</div>
+                    <button class="btn btn-success" onclick="alert('Заказ отправлен на кухню! Ожидайте.')">Оформить заказ</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Restaurant Muchacho. Buen provecho!</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Данные меню ---
+        const menuItems = [
+            { id: 1, name: "Начос Гранде", category: "starters", price: 450, desc: "Кукурузные чипсы с сыром, халапеньо и сальсой.", img: "https://placehold.co/300x200/FFC107/5D4037?text=Nachos" },
+            { id: 2, name: "Кесадилья с курицей", category: "starters", price: 520, desc: "Тортилья с курицей, сыром и овощами.", img: "https://placehold.co/300x200/FFC107/5D4037?text=Quesadilla" },
+            { id: 3, name: "Салат Тако", category: "salads", price: 480, desc: "Микс салата, говядина, фасоль в хрустящей корзинке.", img: "https://placehold.co/300x200/4CAF50/FFFFFF?text=Taco+Salad" },
+            { id: 4, name: "Овощной Микс", category: "salads", price: 390, desc: "Свежие овощи с лаймовой заправкой.", img: "https://placehold.co/300x200/4CAF50/FFFFFF?text=Veggie+Mix" },
+            { id: 5, name: "Чили Кон Карне", category: "soups", price: 550, desc: "Острый суп с фаршем и фасолью.", img: "https://placehold.co/300x200/D32F2F/FFFFFF?text=Chili+Soup" },
+            { id: 6, name: "Чуррос", category: "desserts", price: 300, desc: "Жареное тесто с корицей и шоколадом.", img: "https://placehold.co/300x200/5D4037/FFFFFF?text=Churros" },
+            { id: 7, name: "Лимонад Кактус", category: "drinks", price: 250, desc: "Домашний лимонад с грушей и лаймом.", img: "https://placehold.co/300x200/81D4FA/000000?text=Lemonade" },
+            { id: 8, name: "Кофе Мексикано", category: "drinks", price: 200, desc: "Черный кофе с острым перцем и шоколадом.", img: "https://placehold.co/300x200/3E2723/FFFFFF?text=Coffee" }
+        ];
+
+        // --- Состояние приложения ---
+        let cart = {};
+
+        // --- DOM Элементы ---
+        const menuGrid = document.getElementById('menu-grid');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const totalAmountEl = document.getElementById('total-amount');
+        const cartCountEl = document.getElementById('cart-count');
+
+        // --- Инициализация ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMenu('all');
+        });
+
+        // --- Функции Рендеринга ---
+        function renderMenu(category) {
+            menuGrid.innerHTML = '';
+
+            const filteredItems = category === 'all'
+                ? menuItems
+                : menuItems.filter(item => item.category === category);
+
+            filteredItems.forEach(item => {
+                const itemQty = cart[item.id] || 0;
+
+                const card = document.createElement('div');
+                card.className = 'menu-item';
+                card.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}" class="item-img">
+                    <div class="item-content">
+                        <h3 class="item-title">${item.name}</h3>
+                        <p class="item-desc">${item.desc}</p>
+                        <div class="item-footer">
+                            <span class="item-price">${item.price} ₽</span>
+                            <div class="item-controls">
+                                ${itemQty > 0
+                                    ? `<button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                                       <span>${itemQty}</span>
+                                       <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>`
+                                    : `<button class="btn btn-primary" onclick="updateQuantity(${item.id}, 1)">В заказ</button>`
+                                }
+                            </div>
+                        </div>
+                    </div>
+                `;
+                menuGrid.appendChild(card);
+            });
+        }
+
+        function renderCart() {
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            let totalCount = 0;
+            let hasItems = false;
+
+            menuItems.forEach(item => {
+                if (cart[item.id] > 0) {
+                    hasItems = true;
+                    const qty = cart[item.id];
+                    const sum = item.price * qty;
+                    total += sum;
+                    totalCount += qty;
+
+                    const cartRow = document.createElement('div');
+                    cartRow.className = 'cart-item';
+                    cartRow.innerHTML = `
+                        <div class="cart-item-title">${item.name}</div>
+                        <div class="item-controls">
+                            <button class="qty-btn" style="width:25px; height:25px; font-size:1rem;" onclick="updateQuantity(${item.id}, -1)">-</button>
+                            <span style="margin: 0 10px;">${qty}</span>
+                            <button class="qty-btn" style="width:25px; height:25px; font-size:1rem;" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        </div>
+                        <div style="margin-left: 15px; font-weight: bold; width: 80px; text-align: right;">${sum} ₽</div>
+                    `;
+                    cartItemsContainer.appendChild(cartRow);
+                }
+            });
+
+            if (!hasItems) {
+                cartItemsContainer.innerHTML = '<p class="empty-cart-msg">Корзина пуста, амиго. Добавь немного огня!</p>';
+            }
+
+            totalAmountEl.textContent = total;
+            cartCountEl.textContent = `(${totalCount})`;
+        }
+
+        // --- Логика Управления ---
+        window.updateQuantity = function(id, change) {
+            if (!cart[id]) cart[id] = 0;
+            cart[id] += change;
+
+            if (cart[id] <= 0) {
+                delete cart[id];
+            }
+
+            const activeTab = document.querySelector('.tab-btn.active');
+            const currentCategory = activeTab ? activeTab.dataset.category : 'all';
+
+            renderMenu(currentCategory);
+            renderCart();
+        };
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderMenu(btn.dataset.category);
+            });
+        });
+    </script>
+</body>
+</html>

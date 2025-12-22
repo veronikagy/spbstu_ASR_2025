@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUCHACHO | Мексиканская кухня</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">MUCHACHO 🌮</div>
+            <nav class="nav">
+                <a href="#auth">Войти</a>
+                <a href="#menu">Меню</a>
+                <a href="#cart">Корзина <span id="cart-count">(0)</span></a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="auth" class="hero-section">
+        <div class="container">
+            <div class="hero-card">
+                <h1>Hola, Amigo!</h1>
+                <p>Добро пожаловать в Muchacho. Заказывай быстро, ешь вкусно!</p>
+                <form class="auth-form" onsubmit="event.preventDefault(); alert('Вы авторизованы!');">
+                    <input type="text" placeholder="Ваше имя" required>
+                    <input type="number" placeholder="Номер столика" min="1" max="20" required>
+                    <button type="submit" class="btn btn-primary">Начать заказ</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="menu-section">
+        <div class="container">
+            <h2 class="section-title">Наше Меню</h2>
+
+            <div class="menu-tabs">
+                <button class="tab-btn active" data-category="all">Все</button>
+                <button class="tab-btn" data-category="starters">Стартеры</button>
+                <button class="tab-btn" data-category="salads">Салаты</button>
+                <button class="tab-btn" data-category="soups">Супы</button>
+                <button class="tab-btn" data-category="desserts">Десерты</button>
+                <button class="tab-btn" data-category="drinks">Напитки</button>
+            </div>
+
+            <div id="menu-grid" class="menu-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="cart" class="cart-section">
+        <div class="container">
+            <h2 class="section-title">Ваш Заказ</h2>
+            <div class="cart-wrapper">
+                <div id="cart-items" class="cart-items">
+                    <p class="empty-cart-msg">Корзина пуста, амиго. Добавь немного огня!</p>
+                </div>
+                <div class="cart-summary">
+                    <div class="total-price">Итого: <span id="total-amount">0</span> ₽</div>
+                    <button class="btn btn-success" onclick="alert('Заказ отправлен на кухню! Ожидайте.')">Оформить заказ</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Restaurant Muchacho. Buen provecho!</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

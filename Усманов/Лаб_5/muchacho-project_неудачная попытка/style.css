@@ -1,0 +1,318 @@
+/* --- Сброс и Базовые настройки --- */
+:root {
+    --color-brown: #5D4037;
+    --color-white: #FFFFFF;
+    --color-yellow: #FFC107; /* Яркий желтый */
+    --color-yellow-light: #FFF8E1;
+    --color-green: #2E7D32; /* Насыщенный зеленый */
+    --color-red: #D32F2F;
+    --font-heading: 'Lobster', cursive;
+    --font-body: 'Roboto', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth; /* Плавная прокрутка */
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-yellow-light);
+    color: var(--color-brown);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- Кнопки --- */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: var(--font-body);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn-primary {
+    background-color: var(--color-brown);
+    color: var(--color-white);
+}
+
+.btn-success {
+    background-color: var(--color-green);
+    color: var(--color-white);
+    font-size: 1.2rem;
+    width: 100%;
+}
+
+/* --- Шапка --- */
+.header {
+    background-color: var(--color-brown);
+    color: var(--color-yellow);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+}
+
+.nav a {
+    color: var(--color-white);
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav a:hover {
+    color: var(--color-yellow);
+}
+
+/* --- Секция Авторизации (Hero) --- */
+.hero-section {
+    background: linear-gradient(135deg, var(--color-yellow) 0%, #FF9800 100%);
+    padding: 80px 0;
+    text-align: center;
+}
+
+.hero-card {
+    background: var(--color-white);
+    padding: 40px;
+    border-radius: 15px;
+    display: inline-block;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border: 2px solid var(--color-brown);
+    max-width: 500px;
+    width: 100%;
+}
+
+.hero-card h1 {
+    font-family: var(--font-heading);
+    color: var(--color-green);
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.auth-form input {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+/* --- Меню --- */
+.menu-section {
+    padding: 60px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--color-brown);
+    margin-bottom: 30px;
+}
+
+.menu-tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.tab-btn {
+    background: transparent;
+    border: 2px solid var(--color-brown);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--color-brown);
+}
+
+.tab-btn.active, .tab-btn:hover {
+    background-color: var(--color-green);
+    color: var(--color-white);
+    border-color: var(--color-green);
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.menu-item {
+    background: var(--color-white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+    border-bottom: 5px solid var(--color-green);
+}
+
+.menu-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Используем плейсхолдеры вместо реальных картинок */
+.item-img {
+    width: 100%;
+    height: 200px;
+    background-color: #eee;
+    object-fit: cover;
+}
+
+.item-content {
+    padding: 20px;
+}
+
+.item-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.item-desc {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+    min-height: 40px;
+}
+
+.item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--color-brown);
+}
+
+.item-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qty-btn {
+    background: var(--color-brown);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Корзина --- */
+.cart-section {
+    padding: 60px 0;
+    background-color: var(--color-white);
+    border-top: 2px solid var(--color-brown);
+}
+
+.cart-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-title {
+    font-weight: bold;
+    flex: 1;
+}
+
+.cart-summary {
+    margin-top: 30px;
+    text-align: right;
+    padding: 20px;
+    background: var(--color-yellow-light);
+    border-radius: 10px;
+}
+
+.total-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* --- Подвал --- */
+.footer {
+    background-color: var(--color-brown);
+    color: var(--color-white);
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+/* --- Адаптивность --- */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .hero-card h1 {
+        font-size: 2.2rem;
+    }
+
+    .menu-tabs {
+        overflow-x: auto;
+        padding-bottom: 10px;
+        justify-content: flex-start;
+    }
+
+    .tab-btn {
+        white-space: nowrap;
+    }
+}

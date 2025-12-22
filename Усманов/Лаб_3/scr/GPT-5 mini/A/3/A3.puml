@@ -1,0 +1,45 @@
+@startuml
+left to right direction
+
+actor Читатель as Reader
+actor Библиотекарь as Librarian
+actor Администратор as Admin
+
+package "Система управления библиотекой" {
+
+  usecase "Поиск книг" as UC_SearchBooks
+  usecase "Просмотр каталога" as UC_ViewCatalog
+  usecase "Бронирование книги" as UC_ReserveBook
+  usecase "Продление срока" as UC_ExtendLoan
+  usecase "Управление избранными" as UC_ManageFavorites
+  
+  usecase "Оформление выдачи" as UC_IssueBook
+  usecase "Приём возврата" as UC_ReturnBook
+  usecase "Создание отчётов" as UC_CreateReports
+  usecase "Работа с каталогом" as UC_ManageCatalog
+  
+  usecase "Контроль каталога" as UC_CatalogControl
+  usecase "Просмотр системной информации" as UC_SystemInfo
+  usecase "Доступ к отчётам" as UC_AccessReports
+}
+
+' Связи читателя с вариантами использования
+Reader --> UC_SearchBooks
+Reader --> UC_ViewCatalog
+Reader --> UC_ReserveBook
+Reader --> UC_ExtendLoan
+Reader --> UC_ManageFavorites
+
+' Связи библиотекаря с вариантами использования
+Librarian --> UC_IssueBook
+Librarian --> UC_ReturnBook
+Librarian --> UC_CreateReports
+Librarian --> UC_ManageCatalog
+
+' Связи администратора с вариантами использования
+Admin --> UC_CatalogControl
+Admin --> UC_SystemInfo
+Admin --> UC_AccessReports
+
+@enduml
+

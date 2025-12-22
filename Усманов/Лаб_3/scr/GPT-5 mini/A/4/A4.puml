@@ -1,0 +1,62 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor Читатель
+actor Библиотекарь
+actor Администратор as Admin
+
+Admin -|> Библиотекарь
+
+package "Система управления библиотекой" {
+
+    usecase "Просмотреть каталог" as UC_ViewCatalog
+    usecase "Искать книгу" as UC_SearchBook
+    usecase "Бронировать книгу" as UC_Book
+    usecase "Проверка наличия книги" as UC_CheckAvailability
+    usecase "Продлить срок пользования" as UC_Renew
+    usecase "Проверка задолженности" as UC_CheckDebt
+    usecase "Добавить книгу в избранное" as UC_AddFavorite
+    usecase "Просмотреть свои бронирования" as UC_ViewReservations
+
+    usecase "Выдать книгу" as UC_LendBook
+    usecase "Резервирование книги" as UC_ReserveIfUnavailable
+    usecase "Принять возврат книги" as UC_ReturnBook
+    usecase "Начисление штрафа за просрочку" as UC_FineLate
+    usecase "Добавить книгу в каталог" as UC_AddToCatalog
+    usecase "Формировать отчёт по книгам" as UC_Report
+    usecase "Просмотр задолженностей читателей" as UC_ViewDebts
+
+    usecase "Просматривать отчёты" as UC_AdminReports
+    usecase "Удалять книги из каталога" as UC_DeleteBooks
+    usecase "Мониторить состояние системы" as UC_Monitor
+
+    ' Связи Читателя
+    Читатель --> UC_ViewCatalog
+    Читатель --> UC_SearchBook
+    Читатель --> UC_Book
+    UC_Book --> UC_CheckAvailability : <<include>>
+    Читатель --> UC_Renew
+    UC_Renew --> UC_CheckDebt : <<include>>
+    Читатель --> UC_AddFavorite
+    Читатель --> UC_ViewReservations
+
+    ' Связи Библиотекаря
+    Библиотекарь --> UC_LendBook
+    UC_LendBook --> UC_CheckAvailability : <<include>>
+    UC_LendBook --> UC_ReserveIfUnavailable : <<extend>>
+    Библиотекарь --> UC_ReturnBook
+    UC_ReturnBook --> UC_CheckDebt : <<include>>
+    UC_ReturnBook --> UC_FineLate : <<extend>>
+    Библиотекарь --> UC_AddToCatalog
+    Библиотекарь --> UC_Report
+    UC_Report --> UC_ViewDebts : <<include>>
+
+    ' Связи Администратора
+    Admin --> UC_AdminReports
+    Admin --> UC_DeleteBooks
+    Admin --> UC_Monitor
+}
+
+@enduml
+

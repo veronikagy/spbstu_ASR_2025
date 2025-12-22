@@ -1,0 +1,52 @@
+@startuml
+left to right direction
+
+' Граница системы
+rectangle "Система управления библиотекой" {
+
+  ' Действующие лица (акторы)
+  actor Читатель as Reader
+  actor Библиотекарь as Librarian
+  actor Администратор as Admin
+
+  ' Варианты использования для Читателя
+  usecase "Поиск книг" as UC1
+  usecase "Просмотр каталога" as UC2
+  usecase "Бронирование книги" as UC3
+  usecase "Продление срока" as UC4
+  usecase "Управление избранными" as UC5
+
+  ' Варианты использования для Библиотекаря
+  usecase "Оформление выдачи" as UC6
+  usecase "Приём возврата" as UC7
+  usecase "Создание отчётов" as UC8
+  usecase "Работа с каталогом" as UC9
+
+  ' Варианты использования для Администратора
+  usecase "Контроль каталога" as UC10
+  usecase "Просмотр системной информации" as UC11
+  usecase "Доступ к отчётам" as UC12
+
+  ' Связи акторов с вариантами использования
+  Reader --> UC1 : <<include>>
+  Reader --> UC2 : <<include>>
+  Reader --> UC3 : <<include>>
+  Reader --> UC4 : <<include>>
+  Reader --> UC5 : <<include>>
+
+  Librarian --> UC6 : <<include>>
+  Librarian --> UC7 : <<include>>
+  Librarian --> UC8 : <<include>>
+  Librarian --> UC9 : <<include>>
+
+  Admin --> UC10 : <<include>>
+  Admin --> UC11 : <<include>>
+  Admin --> UC12 : <<include>>
+
+  ' Дополнительные связи между вариантами использования
+  UC9 .right.> UC10 : <<extend>>
+  UC8 .right.> UC12 : <<include>>
+}
+
+@enduml
+

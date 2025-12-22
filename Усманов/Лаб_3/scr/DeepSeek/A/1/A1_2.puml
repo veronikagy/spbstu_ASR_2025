@@ -1,0 +1,41 @@
+@startuml
+
+left to right direction
+
+actor Библиотекарь as Librarian
+actor Читатель as Reader
+actor Администратор as Admin
+
+rectangle "Система управления библиотекой" {
+  (Поиск книг и материалов) as Search
+  (Просмотр информации о книге) as ViewBookInfo
+  (Регистрация нового читателя) as RegisterReader
+  (Выдача книги) as LendBook
+  (Приём возвращённой книги) as ReturnBook
+  (Продление срока выдачи) as RenewBook
+  (Бронирование книги) as ReserveBook
+  (Управление учётными записями) as ManageAccounts
+  (Управление каталогом книг) as ManageCatalogue
+  (Формирование отчётов) as GenerateReports
+
+  Search <|-- ViewBookInfo
+  Search <|-- ReserveBook
+}
+
+Librarian --> (Выдача книги)
+Librarian --> (Приём возвращённой книги)
+Librarian --> (Продление срока выдачи)
+Librarian --> (Регистрация нового читателя)
+
+Reader --> (Поиск книг и материалов)
+Reader --> (Просмотр информации о книге)
+Reader --> (Бронирование книги)
+
+Admin --> (Управление учётными записями)
+Admin --> (Управление каталогом книг)
+Admin --> (Формирование отчётов)
+
+Librarian ..> (Управление каталогом книг) : <<include>>\n(для выдачи/приёмки)
+Librarian ..> (Управление учётными записями) : <<include>>\n(для регистрации)
+
+@enduml
