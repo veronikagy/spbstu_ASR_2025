@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- =========================================
+         META
+    ========================================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RulerSeg — Интерактивная линейка для сегментации дефектов</title>
+    <meta name="description" content="RulerSeg — интерактивный инструмент для полуавтоматической и автоматической сегментации дефектов на микроскопических и промышленных изображениях.">
+
+    <!-- =========================================
+         Bootstrap 5.2 (CSS)
+    ========================================== -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- =========================================
+         Icons (Bootstrap Icons)
+    ========================================== -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- =========================================
+         Google Fonts
+    ========================================== -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- =========================================
+         Custom CSS
+    ========================================== -->
+    <style>
+        /* ------------------------------
+           CSS Variables (Color System)
+        ------------------------------ */
+        :root {
+            --primary-dark: #0b2a4a;   /* тёмно-синий */
+            --accent: #1bb6b1;        /* бирюзовый */
+            --accent-soft: #cfeeee;   /* светлая бирюза */
+            --bg-light: #f4f6f8;      /* светло-серый фон */
+            --text-main: #1f2933;
+            --text-muted: #6b7280;
+        }
+
+        /* ------------------------------
+           Base styles
+        ------------------------------ */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            scroll-behavior: smooth; /* плавная прокрутка */
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        .bg-light-panel {
+            background-color: var(--bg-light);
+        }
+
+        /* ------------------------------
+           Header
+        ------------------------------ */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .cta-btn {
+            background-color: var(--accent);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .cta-btn:hover {
+            background-color: #159a96;
+            color: #ffffff;
+        }
+
+        /* ------------------------------
+           Hero section
+        ------------------------------ */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-dark), #123b66);
+            color: #ffffff;
+        }
+
+        .hero h1 {
+            font-weight: 700;
+        }
+
+        .hero p {
+            color: #dbeafe;
+        }
+
+        .hero-img {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        /* ------------------------------
+           Feature cards
+        ------------------------------ */
+        .feature-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            height: 100%;
+            border: 1px solid #e5e7eb;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        /* ------------------------------
+           Steps
+        ------------------------------ */
+        .step {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .step-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        /* ------------------------------
+           Examples (Before/After)
+        ------------------------------ */
+        .example-box {
+            background: #ffffff;
+            border: 1px dashed #cbd5e1;
+            border-radius: 12px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ------------------------------
+           Testimonials
+        ------------------------------ */
+        .testimonial {
+            background: #ffffff;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+            height: 100%;
+        }
+
+        /* ------------------------------
+           Form
+        ------------------------------ */
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 0.15rem rgba(27,182,177,0.25);
+        }
+
+        .form-message {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        /* ------------------------------
+           Footer
+        ------------------------------ */
+        footer {
+            background: var(--primary-dark);
+            color: #cbd5e1;
+            padding: 2rem 0;
+        }
+
+        footer a {
+            color: #cbd5e1;
+        }
+
+        footer a:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     HEADER / NAVIGATION
+====================================================== -->
+<header>
+    <nav class="navbar navbar-expand-lg container">
+        <a class="navbar-brand" href="#hero">RulerSeg</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#features">Возможности</a></li>
+                <li class="nav-item"><a class="nav-link" href="#how">Как работает</a></li>
+                <li class="nav-item"><a class="nav-link" href="#examples">Примеры</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Демо</a></li>
+            </ul>
+            <a href="#contact" class="btn cta-btn ms-lg-3">Попробовать</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+
+<!-- =====================================================
+     HERO SECTION
+====================================================== -->
+<section id="hero" class="hero">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6">
+                <h1 class="mb-3">Интерактивная линейка для сегментации дефектов</h1>
+                <p class="mb-4">
+                    RulerSeg ускоряет разметку изображений, повышает точность сегментации
+                    и снижает количество ложных срабатываний в системах визуального контроля.
+                </p>
+                <a href="#contact" class="btn cta-btn btn-lg">Запросить демо</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-img" aria-label="Заглушка скриншота интерфейса">
+                    Здесь будет анимация / скриншот работы RulerSeg
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =====================================================
+     FEATURES
+====================================================== -->
+<section id="features" class="bg-light-panel">
+    <div class="container">
+        <h2 class="text-center mb-5">Возможности</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-lightning-charge"></i></div>
+                    <h5>Быстрая интерактивная сегментация</h5>
+                    <p class="text-muted">Минимальное участие оператора с контролем результата.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-image"></i></div>
+                    <h5>Поддержка форматов</h5>
+                    <p class="text-muted">Микроскопические и промышленные изображения.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-bar-chart"></i></div>
+                    <h5>Экспорт масок и метрик</h5>
+                    <p class="text-muted">Готовые данные для QC и аналитики.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-plug"></i></div>
+                    <h5>Лёгкая интеграция</h5>
+                    <p class="text-muted">Встраивается в существующие конвейеры контроля качества.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =====================================================
+     DEMO / VIDEO
+====================================================== -->
+<section>
+    <div class="container text-center">
+        <h2 class="mb-4">Демо</h2>
+        <div class="hero-img mb-3">
+            Здесь будет GIF или видео демонстрации
+        </div>
+        <a href="#contact" class="btn cta-btn">Запустить демо</a>
+    </div>
+</section>
+
+<!-- =====================================================
+     HOW IT WORKS
+====================================================== -->
+<section id="how" class="bg-light-panel">
+    <div class="container">
+        <h2 class="text-center mb-5">Как это работает</h2>
+        <div class="row g-4">
+            <div class="col-md-3 step">
+                <div class="step-icon"><i class="bi bi-upload"></i></div>
+                <p>Загрузка изображения</p>
+            </div>
+            <div class="col-md-3 step">
+                <div class="step-icon"><i class="bi bi-rulers"></i></div>
+                <p>Установка линейки</p>
+            </div>
+            <div class="col-md-3 step">
+                <div class="step-icon"><i class="bi bi-cpu"></i></div>
+                <p>Сегментация дефекта</p>
+            </div>
+            <div class="col-md-3 step">
+                <div class="step-icon"><i class="bi bi-download"></i></div>
+                <p>Экспорт результата</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =====================================================
+     AUDIENCE
+====================================================== -->
+<section>
+    <div class="container">
+        <h2 class="text-center mb-5">Кому полезно</h2>
+        <div class="row g-4">
+            <div class="col-md-4"><strong>Инженерам QC</strong> — ускорение разметки и контроля.</div>
+            <div class="col-md-4"><strong>CV-разработчикам</strong> — удобный инструмент подготовки данных.</div>
+            <div class="col-md-4"><strong>Лабораториям</strong> — повышение воспроизводимости измерений.</div>
+        </div>
+    </div>
+</section>
+
+<!-- =====================================================
+     TECH SPECS
+====================================================== -->
+<section class="bg-light-panel">
+    <div class="container">
+        <h2 class="text-center mb-4">Технические характеристики</h2>
+        <ul>
+            <li>Технологии: OpenCV, PyQt, U-Net</li>
+            <li>API: REST / Python</li>
+            <li>Минимальные требования: CPU, 8 ГБ RAM</li>
+        </ul>
+    </div>
+</section>
+
+<!-- =====================================================
+     EXAMPLES
+====================================================== -->
+<section id="examples">
+    <div class="container">
+        <h2 class="text-center mb-5">Примеры</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="example-box">До / После — пример 1</div>
+            </div>
+            <div class="col-md-6">
+                <div class="example-box">До / После — пример 2</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =====================================================
+     TESTIMONIALS
+====================================================== -->
+<section class="bg-light-panel">
+    <div class="container">
+        <h2 class="text-center mb-5">Отзывы</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="testimonial">
+                    “RulerSeg сократил время разметки более чем в 2 раза.”
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="testimonial">
+                    “Отличный баланс автоматизации и контроля оператора.”
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =====================================================
+     CONTACT FORM
+====================================================== -->
+<section id="contact">
+    <div class="container">
+        <h2 class="text-center mb-4">Запросить демо</h2>
+        <form id="demoForm" class="mx-auto" style="max-width:600px;">
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Имя" required>
+            </div>
+            <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Организация">
+            </div>
+            <div class="mb-3">
+                <textarea class="form-control" rows="4" placeholder="Комментарий"></textarea>
+            </div>
+            <button type="submit" class="btn cta-btn w-100">Отправить</button>
+            <div class="form-message alert alert-success">Заявка отправлена (симуляция).</div>
+        </form>
+    </div>
+</section>
+
+</main>
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+<footer>
+    <div class="container text-center">
+        <p>© 2025 RulerSeg</p>
+        <p>
+            <a href="#">GitHub</a> · <a href="#">Документация</a>
+        </p>
+    </div>
+</footer>
+
+<!-- =====================================================
+     Bootstrap JS
+====================================================== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- =====================================================
+     Custom JS
+====================================================== -->
+<script>
+    // Простая симуляция отправки формы без backend
+    document.getElementById('demoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const msg = document.querySelector('.form-message');
+        msg.style.display = 'block';
+        msg.textContent = 'Спасибо! Мы свяжемся с вами.';
+        this.reset();
+    });
+</script>
+
+</body>
+</html>

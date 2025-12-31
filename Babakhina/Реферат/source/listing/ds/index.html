@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAWTOOTH DETECTOR | Анализ пилообразных колебаний на токамаке "Глобус-М2"</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+    <!-- Главный контейнер -->
+    <div class="container">
+
+        <!-- Шапка с навигацией -->
+        <header class="header">
+            <div class="header__logo">
+                <i class="fas fa-wave-square logo-icon"></i>
+                <h1 class="header__title">SAWTOOTH DETECTOR <span class="header__subtitle">Глобус-М2</span></h1>
+            </div>
+            <nav class="header__nav">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="#main" class="nav__link active"><i class="fas fa-home"></i> Рабочая область</a></li>
+                    <li class="nav__item"><a href="#settings" class="nav__link"><i class="fas fa-sliders-h"></i> Настройки</a></li>
+                    <li class="nav__item"><a href="#help" class="nav__link"><i class="fas fa-question-circle"></i> Помощь</a></li>
+                    <li class="nav__item"><a href="#about" class="nav__link"><i class="fas fa-info-circle"></i> О системе</a></li>
+                </ul>
+            </nav>
+            <div class="header__user">
+                <span class="user__name">Исследователь</span>
+                <i class="fas fa-user-circle user-icon"></i>
+            </div>
+        </header>
+
+        <!-- Панель инструментов -->
+        <section class="toolbar">
+            <div class="toolbar__section">
+                <h3 class="toolbar__title"><i class="fas fa-database"></i> Источник данных</h3>
+                <div class="toolbar__buttons">
+                    <button id="loadFileBtn" class="btn btn--primary">
+                        <i class="fas fa-folder-open"></i> Загрузить файл
+                    </button>
+                    <button id="connectADCBtn" class="btn btn--secondary">
+                        <i class="fas fa-plug"></i> Подключить АЦП
+                    </button>
+                    <button id="liveModeBtn" class="btn btn--accent">
+                        <i class="fas fa-play-circle"></i> Режим эксперимента
+                    </button>
+                </div>
+            </div>
+
+            <div class="toolbar__section">
+                <h3 class="toolbar__title"><i class="fas fa-cogs"></i> Режимы обработки</h3>
+                <div class="toolbar__buttons">
+                    <select id="modelSelect" class="select">
+                        <option value="hybrid">Гибридный алгоритм (по умолчанию)</option>
+                        <option value="gaussian">Детектирование по Гауссу</option>
+                        <option value="statistical">Статистический анализ (gSPRT)</option>
+                        <option value="ml-cnn">Модель CNN</option>
+                        <option value="ml-lstm">Модель LSTM</option>
+                    </select>
+                    <button id="applyModelBtn" class="btn btn--primary">
+                        <i class="fas fa-check"></i> Применить
+                    </button>
+                </div>
+            </div>
+
+            <div class="toolbar__section">
+                <h3 class="toolbar__title"><i class="fas fa-filter"></i> Визуализация</h3>
+                <div class="toolbar__buttons">
+                    <label class="checkbox">
+                        <input type="checkbox" id="showRawSignal" checked>
+                        <span class="checkbox__label">Исходный сигнал</span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" id="showProcessed" checked>
+                        <span class="checkbox__label">Обработанный</span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" id="showDetections" checked>
+                        <span class="checkbox__label">Детектированные события</span>
+                    </label>
+                    <button id="exportBtn" class="btn btn--secondary">
+                        <i class="fas fa-download"></i> Экспорт данных
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Основное рабочее пространство -->
+        <main class="main-content" id="main">
+            <div class="content-grid">
+
+                <!-- Левая колонка: графики -->
+                <div class="grid-column grid-column--wide">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h2 class="chart-title">
+                                <i class="fas fa-chart-line"></i>
+                                SXR-сигналы и детектирование пилообразных колебаний
+                            </h2>
+                            <div class="chart-controls">
+                                <button id="zoomInBtn" class="btn-icon" title="Увеличить">
+                                    <i class="fas fa-search-plus"></i>
+                                </button>
+                                <button id="zoomOutBtn" class="btn-icon" title="Уменьшить">
+                                    <i class="fas fa-search-minus"></i>
+                                </button>
+                                <button id="resetViewBtn" class="btn-icon" title="Сбросить вид">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-area" id="mainChart">
+                            <div class="chart-placeholder">
+                                <i class="fas fa-wave-square placeholder-icon"></i>
+                                <p class="placeholder-text">Загрузите данные или подключитесь к АЦП для начала анализа</p>
+                                <p class="placeholder-hint">Поддерживаемые форматы: .mat, .hdf5, .csv, .json</p>
+                            </div>
+                        </div>
+                        <div class="chart-footer">
+                            <div class="chart-info">
+                                <span class="info-item"><i class="fas fa-circle" style="color: #4a6fa5;"></i> Канал 1 (Core)</span>
+                                <span class="info-item"><i class="fas fa-circle" style="color: #166088;"></i> Канал 2 (Mid)</span>
+                                <span class="info-item"><i class="fas fa-circle" style="color: #17a398;"></i> Канал 3 (Edge)</span>
+                                <span class="info-item"><i class="fas fa-square" style="color: #d00000;"></i> Детектированные краши</span>
+                            </div>
+                            <div class="chart-stats">
+                                <span id="detectionCount">Детектировано: 0 событий</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="secondary-charts">
+                        <div class="chart-small">
+                            <h3 class="chart-small-title">Профиль распределения</h3>
+                            <div class="chart-small-area" id="profileChart"></div>
+                        </div>
+                        <div class="chart-small">
+                            <h3 class="chart-small-title">Спектр сигнала</h3>
+                            <div class="chart-small-area" id="spectrumChart"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Правая колонка: панель управления и статуса -->
+                <div class="grid-column grid-column--narrow">
+                    <!-- Вместо этого в control-panel: -->
+<div class="control-panel">
+    <h3 class="control-panel__title">
+        <i class="fas fa-sliders-h"></i> Параметры обработки
+    </h3>
+    <div class="control-panel__content">
+        <!-- Все элементы управления параметрами здесь -->
+        <div class="parameter-group">
+            <label class="parameter-label" for="kernelWidth">Ширина ядра Гаусса (σ):</label>
+            <div class="parameter-control">
+                <input type="range" id="kernelWidth" min="0.01" max="0.5" step="0.01" value="0.1" class="slider">
+                <span class="parameter-value" id="kernelWidthValue">0.10 мс</span>
+            </div>
+        </div>
+
+        <div class="parameter-group">
+            <label class="parameter-label" for="threshold">Порог детектирования:</label>
+            <div class="parameter-control">
+                <input type="range" id="threshold" min="0.1" max="10" step="0.1" value="3.5" class="slider">
+                <span class="parameter-value" id="thresholdValue">3.5 σ</span>
+            </div>
+        </div>
+
+        <div class="parameter-group">
+            <label class="parameter-label" for="minDuration">Мин. длительность краша:</label>
+            <div class="parameter-control">
+                <input type="range" id="minDuration" min="0.05" max="2" step="0.05" value="0.1" class="slider">
+                <span class="parameter-value" id="minDurationValue">0.10 мс</span>
+            </div>
+        </div>
+
+        <div class="parameter-group">
+            <label class="parameter-label" for="maxDuration">Макс. длительность краша:</label>
+            <div class="parameter-control">
+                <input type="range" id="maxDuration" min="0.2" max="5" step="0.1" value="2.0" class="slider">
+                <span class="parameter-value" id="maxDurationValue">2.00 мс</span>
+            </div>
+        </div>
+
+        <div class="parameter-actions">
+            <button id="applyParamsBtn" class="btn btn--primary btn--block">
+                <i class="fas fa-bolt"></i> Применить параметры
+            </button>
+            <button id="defaultParamsBtn" class="btn btn--secondary btn--block">
+                <i class="fas fa-undo"></i> Значения по умолчанию
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Вместо этого в status-panel: -->
+<div class="status-panel">
+    <h3 class="status-panel__title">
+        <i class="fas fa-info-circle"></i> Статус системы
+    </h3>
+    <div class="status-panel__content">
+        <div class="status-list">
+            <div class="status-item status-item--active">
+                <i class="fas fa-check-circle status-icon"></i>
+                <div class="status-content">
+                    <span class="status-title">Система готова</span>
+                    <span class="status-description">Ожидание входных данных</span>
+                </div>
+            </div>
+
+            <div class="status-item">
+                <i class="fas fa-microchip status-icon"></i>
+                <div class="status-content">
+                    <span class="status-title">Алгоритм</span>
+                    <span id="currentAlgorithm" class="status-description">Гибридный</span>
+                </div>
+            </div>
+
+            <div class="status-item">
+                <i class="fas fa-database status-icon"></i>
+                <div class="status-content">
+                    <span class="status-title">Источник данных</span>
+                    <span id="dataSource" class="status-description">Не подключен</span>
+                </div>
+            </div>
+
+            <div class="status-item">
+                <i class="fas fa-clock status-icon"></i>
+                <div class="status-content">
+                    <span class="status-title">Последняя обработка</span>
+                    <span id="lastProcessTime" class="status-description">-</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="processing-controls">
+            <button id="startProcessingBtn" class="btn btn--accent btn--block" disabled>
+                <i class="fas fa-play"></i> Начать обработку
+            </button>
+            <button id="stopProcessingBtn" class="btn btn--secondary btn--block" disabled>
+                <i class="fas fa-stop"></i> Остановить
+            </button>
+        </div>
+    </div>
+</div>
+
+                    <div class="log-panel">
+                        <h3 class="log-panel__title">
+                            <i class="fas fa-terminal"></i> Журнал событий
+                        </h3>
+                        <div class="log-content-container">
+                            <div class="log-content" id="logContent">
+                                <div class="log-entry">
+                                    <span class="log-time">12:00:00</span>
+                                    <span class="log-message">Система инициализирована. Ожидание входных данных.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="clearLogBtn" class="btn btn--secondary btn--small">
+                            <i class="fas fa-trash-alt"></i> Очистить журнал
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Подвал -->
+        <footer class="footer">
+            <div class="footer__info">
+                <p class="footer__text">
+                    <i class="fas fa-flask"></i>
+                    Лаборатория физики плазмы. Токамак "Глобус-М2"
+                </p>
+                <p class="footer__text">
+                    Система автоматического детектирования пилообразных колебаний | Версия 1.0
+                </p>
+            </div>
+            <div class="footer__links">
+                <a href="#docs" class="footer__link"><i class="fas fa-book"></i> Документация</a>
+                <a href="#contacts" class="footer__link"><i class="fas fa-envelope"></i> Контакты</a>
+                <a href="#privacy" class="footer__link"><i class="fas fa-shield-alt"></i> Конфиденциальность</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Модальное окно загрузки файла -->
+    <div id="fileModal" class="modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3 class="modal__title"><i class="fas fa-file-upload"></i> Загрузка данных</h3>
+                <button class="modal__close">&times;</button>
+            </div>
+            <div class="modal__body">
+                <div class="file-drop-area" id="fileDropArea">
+                    <i class="fas fa-cloud-upload-alt file-drop-icon"></i>
+                    <p class="file-drop-text">Перетащите файлы сюда или нажмите для выбора</p>
+                    <p class="file-drop-hint">Поддерживаемые форматы: .mat, .hdf5, .csv, .json</p>
+                    <input type="file" id="fileInput" accept=".mat,.hdf5,.csv,.json,.txt">
+                </div>
+                <div class="file-preview" id="filePreview">
+                    <!-- Будет заполнено после выбора файла -->
+                </div>
+            </div>
+            <div class="modal__footer">
+                <button id="confirmLoadBtn" class="btn btn--primary" disabled>Загрузить</button>
+                <button id="cancelLoadBtn" class="btn btn--secondary">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

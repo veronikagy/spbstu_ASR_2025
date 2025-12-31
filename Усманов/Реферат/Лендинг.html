@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Ándale! Smart Order — Интеллектуальное Меню</title>
+    <style>
+        /* Переменные цветовой палитры */
+        :root {
+            --mex-brown: #4E342E;
+            --mex-white: #FFFFFF;
+            --mex-yellow: #FFD600;
+            --mex-green: #2E7D32;
+            --mex-light-yellow: #FFF9C4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Плавная прокрутка */
+        }
+
+        body {
+            background-color: var(--mex-white);
+            color: var(--mex-brown);
+            line-height: 1.6;
+        }
+
+        /* Навигация */
+        header {
+            background-color: var(--mex-brown);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            color: var(--mex-yellow);
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav a {
+            color: var(--mex-white);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--mex-yellow);
+        }
+
+        /* Главная секция (Hero) */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(78, 52, 46, 0.7), rgba(78, 52, 46, 0.7)),
+                        url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--mex-white);
+            padding: 0 20px;
+            border-bottom: 10px solid var(--mex-green);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--mex-yellow);
+            text-shadow: 3px 3px 0 var(--mex-green);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background-color: var(--mex-green);
+            color: var(--mex-white);
+            padding: 15px 40px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            border: 3px solid var(--mex-yellow);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            background-color: var(--mex-brown);
+        }
+
+        /* Секции контента */
+        section {
+            padding: 80px 10% 40px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--mex-green);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '🌵';
+            display: block;
+            font-size: 1.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--mex-light-yellow);
+            padding: 30px;
+            border-radius: 20px;
+            border-left: 8px solid var(--mex-brown);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+            transition: translateY -10px;
+        }
+
+        .card h3 {
+            color: var(--mex-brown);
+            margin-bottom: 1rem;
+        }
+
+        /* Футер */
+        footer {
+            background: var(--mex-brown);
+            color: var(--mex-white);
+            text-align: center;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            header { flex-direction: column; }
+            nav { margin-top: 10px; }
+            nav a { margin: 0 10px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">¡Ándale! Smart</div>
+        <nav>
+            <a href="#about">О проекте</a>
+            <a href="#tech">Технологии</a>
+            <a href="#science">Наука</a>
+            <a href="#contact">Контакты</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Вкус автоматизации с огоньком!</h1>
+        <p>Интеллектуальная система заказа еды: анализируем ваши предпочтения быстрее, чем вы скажете "Гуакамоле"!</p>
+        <a href="#about" class="btn">Узнать секрет рецепта</a>
+    </section>
+
+    <section id="about">
+        <h2>О нашем проекте</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Цифровое меню</h3>
+                <p>Актуальная информация о блюдах, КБЖУ и ингредиентах в реальном времени.</p>
+            </div>
+            <div class="card">
+                <h3>Умная кухня</h3>
+                <p>Мгновенная передача заказа и оптимизация нагрузки на поваров.</p>
+            </div>
+            <div class="card">
+                <h3>Без очередей</h3>
+                <p>Самостоятельное оформление заказа без участия официанта — быстро и удобно.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="tech" style="background-color: var(--mex-light-yellow);">
+        <h2>Технологический стек</h2>
+        <div class="grid">
+            <div class="card" style="background: white;">
+                <h3>Frontend</h3>
+                <p>Адаптивный интерфейс для любых мобильных устройств и планшетов.</p>
+            </div>
+            <div class="card" style="background: white;">
+                <h3>Математический анализ</h3>
+                <p>Алгоритмы кластеризации клиентов для персонализированных предложений.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="science">
+        <h2>Научная база</h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">
+            В основе системы лежат математические модели прогнозирования нагрузки на кухонные терминалы
+            и методы визуализации пользовательских путей (User Flow).
+        </p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Проект «Система заказа еды». Разработано в рамках научного исследования.</p>
+    </footer>
+
+    <script>
+        // Простая модульная функция для консольного лога при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("¡Ándale! Smart Order Landing Page Loaded");
+        });
+
+        // Плавное появление элементов при скролле (пример JS-функционала)
+        const cards = document.querySelectorAll('.card');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease-out';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

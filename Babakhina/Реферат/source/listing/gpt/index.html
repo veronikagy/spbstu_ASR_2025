@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Sawtooth Detection Service | Глобус-М2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-d9Q8GgG9V+X4C4l0w0l7m5zGkJcZ3j4wPpVZ0B+3S9MZcZr0pQ8l8F9F1pKJxA5K3QKZk5Gk8K1hQ=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="header__title">
+        <i class="fa-solid fa-wave-square"></i>
+        Sawtooth Detection Service
+    </div>
+    <div class="header__subtitle">
+        SXR-диагностика · Токамак «Глобус-М2»
+    </div>
+</header>
+
+<div class="layout">
+
+    <!-- Навигация -->
+    <nav class="sidebar">
+        <ul class="sidebar__menu">
+            <li><i class="fa-solid fa-folder-open"></i> Данные</li>
+            <li><i class="fa-solid fa-microchip"></i> Эксперимент</li>
+            <li><i class="fa-solid fa-sliders"></i> Настройки</li>
+            <li><i class="fa-solid fa-chart-line"></i> Визуализация</li>
+            <li><i class="fa-solid fa-gear"></i> Сервис</li>
+        </ul>
+    </nav>
+
+    <!-- Основная рабочая область -->
+    <main class="main">
+
+        <!-- Панель управления -->
+        <section class="control-panel">
+            <article class="control-panel__block">
+                <h3>Источник данных</h3>
+                <button id="loadFilesBtn">
+                    <i class="fa-solid fa-upload"></i> Загрузить файлы
+                </button>
+                <button id="connectAdcBtn">
+                    <i class="fa-solid fa-plug"></i> Подключиться к АЦП
+                </button>
+            </article>
+
+            <article class="control-panel__block">
+                <h3>Режим обработки</h3>
+                <label>
+                    Модель детектирования:
+                    <select id="modelSelect">
+                        <option>Классический алгоритм</option>
+                        <option>Гибридный (статистика + физика)</option>
+                        <option>ML: CNN-LSTM</option>
+                    </select>
+                </label>
+            </article>
+
+            <article class="control-panel__block">
+                <h3>Этапы алгоритма</h3>
+                <label><input type="checkbox" checked> Предобработка</label>
+                <label><input type="checkbox" checked> Статистическая проверка</label>
+                <label><input type="checkbox" checked> Пространственный анализ</label>
+            </article>
+
+            <article class="control-panel__block">
+                <h3>Управление</h3>
+                <button class="primary-btn" id="startBtn">
+                    <i class="fa-solid fa-play"></i> Запустить анализ
+                </button>
+                <button class="secondary-btn" id="resetBtn">
+                    <i class="fa-solid fa-rotate-left"></i> Сброс
+                </button>
+            </article>
+        </section>
+
+        <!-- Рабочая область -->
+        <section class="workspace">
+            <div class="workspace__grid">
+                <div class="workspace__cell">SXR сигнал</div>
+                <div class="workspace__cell">Свертка / фронты</div>
+                <div class="workspace__cell">Детектированные краши</div>
+                <div class="workspace__cell">Пространственный профиль</div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<footer class="footer">
+    <p>
+        © Локальный сервис анализа данных · Лаборатория физики плазмы
+    </p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
